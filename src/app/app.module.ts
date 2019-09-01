@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
+import { IonicModule } from '@ionic/angular';
 @NgModule({
   declarations: [
     AppComponent
@@ -12,6 +13,7 @@ import { environment } from 'src/environments/environment';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    IonicModule,
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [],

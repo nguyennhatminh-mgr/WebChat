@@ -7,16 +7,27 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { IonicModule } from '@ionic/angular';
 import { LoginComponent } from './authentication/login/login.component';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { HomeComponent } from './views/home/home.component';
+import { ChatDetailComponent } from './views/chat/chat-detail/chat-detail.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
+    ChatDetailComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     IonicModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig)
+    ReactiveFormsModule,
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

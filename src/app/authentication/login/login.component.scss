@@ -1,0 +1,66 @@
+.title{
+    background: #1aaa1a;
+    width: 100%;
+    height: 40px;
+    // display: flex;
+    text-align: center;
+    
+}
+.title h3.left{
+    color: white;
+    line-height: 40px;
+    text-transform: uppercase;
+}
+
+.login-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+    border: 0.5px solid rgb(219, 218, 218);
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    box-shadow: -6px 13px 10px rgba(0, 0, 0, 0.5);
+  }
+.login-form .email,.login-form .password, .login-form .reenterpassword, .login-form .username{
+    border: 1px solid #1aaa1a;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    box-shadow: -2px 3px rgba(3, 245, 3, 0.3);
+}
+.login-form ion-button{
+
+    cursor: pointer;
+}
+
+#divbtnlogin{
+    width: 100%;
+    // position: relative;
+    display: flex;
+}
+.btnlogin{
+    width: 25%;
+}
+.textsignin{
+    width: 75%;
+}
+.textsignin span{
+    line-height: 44px;
+} 
+
+#divbtnsignup{
+    width: 100%;
+    padding-top: 10px;
+}
+#divbtnsignup .textsignin{
+    width: 100%;
+}
+#divbtnsignup .btnsignin{
+    width: 100%;
+    padding-left: 50%;
+}
+#divbtnsignup .textaftersignin{
+    
+}

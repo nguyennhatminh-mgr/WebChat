@@ -1,4 +1,6 @@
-<ng-container *ngIf="chat$ | async as chat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+
+<ng-container *ngIf="chat$ | async as chat" >
 		<ng-container *ngIf=" auth.user$ | async as user">
 	  
 		  <div class="top">

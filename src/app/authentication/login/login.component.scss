@@ -4,6 +4,8 @@
     height: 40px;
     // display: flex;
     text-align: center;
+    border-radius: 5px;
+    box-shadow: -2px 5px rgba(0, 128, 0, 0.438);
     
 }
 .title h3.left{
@@ -13,12 +15,12 @@
 }
 
 .login-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
+    // min-width: 250px;
+    // width: 500px;
+    // width: 100%;
     border: 0.5px solid rgb(219, 218, 218);
     border-radius: 10px;
-    margin: auto;
+    // margin: auto;
     margin-top: 50px;
     padding: 20px;
     box-shadow: -6px 13px 10px rgba(0, 0, 0, 0.5);
@@ -31,7 +33,6 @@
     box-shadow: -2px 3px rgba(3, 245, 3, 0.3);
 }
 .login-form ion-button{
-
     cursor: pointer;
 }
 
@@ -41,26 +42,39 @@
     display: flex;
 }
 .btnlogin{
-    width: 25%;
+    width: 22%;
 }
 .textsignin{
-    width: 75%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
 }
 .textsignin span{
-    line-height: 44px;
+    // line-height: 44px;
 } 
 
 #divbtnsignup{
     width: 100%;
     padding-top: 10px;
 }
-#divbtnsignup .textsignin{
-    width: 100%;
-}
-#divbtnsignup .btnsignin{
-    width: 100%;
-    padding-left: 50%;
-}
-#divbtnsignup .textaftersignin{
+#divbtnlogin .textsignin{
     
 }
+#divbtnsignup .btnsignup{
+    width: 100%;
+    // padding-left: 55%;
+}
+#divbtnsignup .textaftersignin{
+    width: 100%;
+}
+.textclick{
+    margin-left: 5px; color: blue; cursor: pointer;
+}
+
+p.notify{
+    color: red;
+    font-size: 12px;
+    font-family: arial;
+} 

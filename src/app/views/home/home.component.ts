@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/service/authentication/auth.service';
 import { ChatService } from 'src/app/service/cloud firestore/chat.service';
 

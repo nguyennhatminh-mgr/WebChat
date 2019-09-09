@@ -55,18 +55,37 @@ export class AuthService {
     return userRef.set(data);
   }
 
+  private async updateUserProfile(profile){
+    let user = this.angularFireAuth.auth.currentUser;
+    user.updateProfile({
+      displayName: profile.displayName,
+      photoURL: profile.photoURL
+    }).then( ()=> console.log('success'), ()=> console.log('error'));
+  }
+
   async signOut() {
     await this.angularFireAuth.auth.signOut();
     return this.router.navigate(['/']);
   }
 
   /* Sign up */
-  SignUp(email: string, password: string) {
+  SignUp(email: string, password: string,username?: string) {
     this.angularFireAuth
       .auth
       .createUserWithEmailAndPassword(email, password)
-      .then(res => {
+      .then(async (res:any) => {
+        await this.updateUserProfile({displayName:username});
+        const user = res.user;
+        const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+        const data:User = {
+          uid : user.uid,
+          email: user.email,
+          displayName: username,
+          photoURL: user.photoURL
+        };
+        userRef.set(data);
         console.log('Successfully signed up!', res);
+        return this.router.navigate(['/home']);
       })
       .catch(error => {
         console.log('Something is wrong:', error.message);
@@ -78,8 +97,19 @@ export class AuthService {
     this.angularFireAuth
       .auth
       .signInWithEmailAndPassword(email, password)
-      .then(res => {
+      .then((res:any) => {
+        const user = res.user;
+        console.log(user);
+        const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+        const data:User = {
+          uid : user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL
+        }
+        userRef.set(data);
         console.log('Successfully signed in!');
+        return this.router.navigate(['/home']);
       })
       .catch(err => {
         console.log('Something is wrong:', err.message);

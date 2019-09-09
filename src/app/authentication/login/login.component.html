@@ -1,8 +1,8 @@
-<div class="title">
+<!-- <div class="title">
     <h3 class="left">My boxchat app</h3>
-</div>
-<form class="login-form">
-    <h3 style="margin-bottom: 50px;">Login</h3>
+</div> -->
+<!-- <form class="login-form">
+    <h3 style="margin-bottom: 50px;">Welcome</h3>
     <div class="email">
         <ion-input type="email" placeholder="Enter your email" autofocus="true" clear-input="true"></ion-input>
     </div>
@@ -25,17 +25,14 @@
         
         <div class="textsignin">
             <span>If you have not an account</span>
-            <span style="margin-left: 5px; color: blue;" (click)="signupClick()">click here to sign up</span>
+            <span class="textclick" (click)="signupClick()">click here to sign up</span>
         </div>
     </div>
     <div id="divbtnsignup" *ngIf="repass">
         <div class="textaftersignin">
-            <span>Please enter your information, after click sign up to sign up</span>
+            <span>Already have account ?</span> <span class="textclick" (click)="backClick()">Sign in</span>
         </div>
-        <div class="btnsignin">
-            <ion-button (click)="backClick()">
-                Back
-            </ion-button>
+        <div class="btnsignup">
             <ion-button (click)="signupClick()">
                 Sign up
             </ion-button>
@@ -43,12 +40,80 @@
     </div>
     
     
-</form>
+</form> -->
 
 <ion-grid>
     <ion-row>
-        <ion-col size-xs="12" size-lg="6">
+        <ion-col size-xs="12" size-xl="14">
+            <div class="title">
+                <h3 class="left">My boxchat app</h3>
+            </div>
+
+            <form class="login-form" #formSignin="ngForm">
+                <h3 style="margin-bottom: 20px;">Welcome to box chat</h3>
+                <div class="email">
+                    <ion-input type="email" placeholder="Enter your email"
+                    autofocus="true" clear-input="true" name="email"
+                    required email #txtEmail="ngModel" ngModel></ion-input>
+                </div>
+                <p class="notify" *ngIf="txtEmail?.touched && txtEmail.errors?.required">*Email is required</p>
+                <p class="notify" *ngIf="txtEmail?.touched && txtEmail.errors?.email">*Email is unvalid</p>
+
+               
+                <div class="password">
+                    <ion-input type="password" placeholder="Enter your password" clear-input="true" minlength="6"
+                    name="password" required #txtPassword="ngModel" ngModel></ion-input>
+                </div>
+                <p class="notify" *ngIf="txtPassword?.touched && txtPassword?.errors?.required">*Password is required</p>
+                <p class="notify" *ngIf="txtPassword?.touched && txtPassword?.errors?.minlength">*Password is at least 6 characters</p>
+                
+                
+
+                <div class="reenterpassword" [hidden]="!repass">
+                    <ion-input type="password" placeholder="Enter your password again" clear-input="true"
+                    minlength="6" name="repassword" required #txtRepassword="ngModel" ngModel></ion-input>
+                </div>
+                <p class="notify" [hidden]="!repass" *ngIf="txtRepassword?.touched && txtRepassword?.errors?.required">*Reenter password is required</p>
+                <p class="notify" [hidden]="!repass" *ngIf="txtRepassword?.touched && txtRepassword?.errors?.notEqual">*Pass word does not match</p>
+
+                <div class="username" [hidden]="!repass">
+                    <ion-input type="text" placeholder="Enter your username" clear-input="true"
+                    name="displayname" required #txtUsername="ngModel" ngModel></ion-input>
+                </div>
+                <p class="notify" [hidden]="!repass" *ngIf="txtUsername?.touched && txtUsername.errors?.required">*Username is required</p>
+
+                <div id="divbtnlogin" *ngIf="appear"> 
+                    <ion-row>
+                        <ion-col size-xs="12" size-xl="2.5">
+                            <div class="btnlogin" style="margin-right: 5%;">
+                                <ion-button (click)="loginClick(formSignin)" [disabled]="txtEmail?.errors?.invalid || txtPassword?.errors?.invalid">
+                                        Log in
+                                </ion-button>
+                            </div>
+                        </ion-col>
+                        <ion-col size-xs="13" size-xl="9.5">
+                                <div class="textsignin">
+                                    <p>
+                                        <span>If you have not an account</span>
+                                        <span class="textclick" (click)="signupClick()">click to sign up</span>
+                                    </p>
+                                </div>
+                        </ion-col>
+                    </ion-row>
+                </div>
+                <div id="divbtnsignup" *ngIf="repass">
+                    <div class="textaftersignin">
+                        <span>Already have account ?</span> <span class="textclick" (click)="backClick()">Sign in</span>
+                    </div>
+                    <div class="btnsignup">
+                        <ion-button (click)="signup(formSignin)" [disabled]="formSignin.invalid">
+                            Sign up
+                        </ion-button>
+                    </div>
+                </div>
+            </form>
         </ion-col>
-        <ion-col size-xs="12" size-lg="6"></ion-col>
+        <!-- <ion-col size-xs="12" size-lg="6"></ion-col> -->
     </ion-row>
 </ion-grid>
+ 

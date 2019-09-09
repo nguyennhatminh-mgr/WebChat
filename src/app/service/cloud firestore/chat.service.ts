@@ -60,7 +60,7 @@ export class ChatService {
 		};
 		const docRef = await this.afs.collection('chats').add(data);
 
-		// return this.router.navigate(['chats',docRef.id]);
+		return this.router.navigate(['chats',docRef.id]);
 	}
 
 	async sendMessage(chatId, content){

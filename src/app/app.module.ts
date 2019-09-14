@@ -12,12 +12,12 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { HomeComponent } from './views/home/home.component';
 import { ChatDetailComponent } from './views/chat/chat-detail/chat-detail.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ChatModule } from './views/chat/chat.module';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
-    ChatDetailComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +28,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    ChatModule
   ],
   providers: [],
   bootstrap: [AppComponent]

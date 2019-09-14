@@ -9,9 +9,16 @@ import { ChatService } from 'src/app/service/cloud firestore/chat.service';
 })
 export class HomeComponent implements OnInit {
   userChats$;
+  url="../../../../assets/images/backgroundLogin.jpg";
   constructor(public auth: AuthService, public cs: ChatService) {}
   ngOnInit() {
     this.userChats$ = this.cs.getUserChats();
   }
 
+  getUrl(){
+    if(this.auth.user$)
+    {
+      
+    }
+  }
 }

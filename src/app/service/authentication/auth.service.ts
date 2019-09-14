@@ -65,7 +65,7 @@ export class AuthService {
 
   async signOut() {
     await this.angularFireAuth.auth.signOut();
-    return this.router.navigate(['/']);
+    return this.router.navigate(['/login']);
   }
 
   /* Sign up */

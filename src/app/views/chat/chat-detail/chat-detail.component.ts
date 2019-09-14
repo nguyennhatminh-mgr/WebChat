@@ -10,16 +10,25 @@ import { AuthService } from 'src/app/service/authentication/auth.service';
   styleUrls: ['./chat-detail.component.scss']
 })
 export class ChatDetailComponent implements OnInit {
+
   chat$ : Observable<any>;
   newMsg: string;
+  displayusername:boolean;
+  dem=-1;
+  scrolltop;
   constructor(
     public cs: ChatService,
     private route: ActivatedRoute,
     public auth: AuthService
-  ) { }
+  ) {
+      this.displayusername=false;
+   }
 
   ngOnInit() {
-    const chatId = this.route.snapshot.paramMap.get('id');
+    let chatId = this.route.snapshot.paramMap.get('id');
+    if (!chatId){
+      chatId = "L8DXImtGfWNst2znSAZu";
+    }
     const source = this.cs.get(chatId);
     this.chat$ = this.cs.joinUsers(source);
   }

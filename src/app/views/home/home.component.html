@@ -1,0 +1,41 @@
+<div class="tong">
+  <img class="imgoutside" src="../../../assets/images/backgroundhome.png" alt="">
+  <div class="manden"></div>
+  <div class="noidung">
+      <!-- <div class="title">
+          <h1>Welcome to Mega Chat</h1>
+      </div> -->
+      
+      <div class="login">
+          <div *ngIf=" auth.user$ | async as user; else login" class="logininside">
+            <p>
+                <span class="username">welcome {{ user.displayName }} to box chat</span>
+                <!-- <span class="username">welcome {{ user.uid }} to box chat</span> -->
+            </p>
+            <!-- <img [src]="user.photoURL" width="50px"> -->
+            <div class="anhuser"><img [src]="url"></div>
+            
+            <button class="signOut" (click)="auth.signOut()">Sign Out</button>
+            <hr>
+
+            <button class="joinYourChat" routerLink="/chats/WVcW2Ra1QbsXWAHNF34f">Join Your Chat 🎪</button>
+            <button class="button is-info" (click)="cs.create()">Revise your information</button>
+
+            <hr>
+
+            <!-- <h3>My Chats</h3> -->
+
+            <!-- <ul>
+              <li *ngFor="let chat of userChats$ | async">
+                <a routerLink="/chats/{{chat.id}}">{{ chat.id }} - {{ chat.messages.length }} Messages </a>
+              </li>
+            </ul> -->
+          </div>
+          <ng-template #login>
+            <h1 style="color: white; margin-bottom: 10px;">You have not account, please click login with Google</h1>
+            <button class="button" (click)="auth.googleSignIn()">Login with Google</button>
+          </ng-template>
+      </div>
+        
+  </div>
+</div>

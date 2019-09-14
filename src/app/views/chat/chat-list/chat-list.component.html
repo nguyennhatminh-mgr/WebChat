@@ -1,0 +1,14 @@
+<ion-content fullscreen="true" style="--offset-bottom:300px !important;">
+    <ng-container>
+        <div class="setheight">
+            <ion-list lines="full">
+                <ion-item *ngFor="let item of user">
+                    <ion-avatar slot="start">
+                        <img src="{{url}}">
+                    </ion-avatar>
+                    <ion-label>{{item.name}}</ion-label>
+                </ion-item>
+            </ion-list>
+        </div>
+    </ng-container>
+</ion-content>

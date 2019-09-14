@@ -1,0 +1,64 @@
+<div class="tong">
+    <div class="title">
+        <h3 class="left">My boxchat app</h3>
+    </div>
+
+    <form class="login-form" #formSignin="ngForm">
+        <h3 class="subtitle textwhite">Welcome to box chat</h3>
+        <div class="email">
+            <ion-input type="email" placeholder="Enter your email"
+             clear-input="true" name="email"
+            required email #txtEmail="ngModel" ngModel></ion-input>
+        </div>
+        <p class="notify" *ngIf="txtEmail?.touched && txtEmail.errors?.required">*Email is required</p>
+        <p class="notify" *ngIf="txtEmail?.touched && txtEmail.errors?.email">*Email is unvalid</p>
+
+        
+        <div class="password">
+            <ion-input type="password" placeholder="Enter your password" clear-input="true" minlength="6"
+            name="password" required #txtPassword="ngModel" ngModel></ion-input>
+        </div>
+        <p class="notify" *ngIf="txtPassword?.touched && txtPassword?.errors?.required">*Password is required</p>
+        <p class="notify" *ngIf="txtPassword?.touched && txtPassword?.errors?.minlength">*Password is at least 6 characters</p>
+        
+        
+
+        <div class="reenterpassword" [hidden]="!repass">
+            <ion-input type="password" placeholder="Enter your password again" clear-input="true"
+            minlength="6" name="repassword" required #txtRepassword="ngModel" ngModel></ion-input>
+        </div>
+        <p class="notify" [hidden]="!repass" *ngIf="txtRepassword?.touched && txtRepassword?.errors?.required">*Reenter password is required</p>
+        <p class="notify" [hidden]="!repass" *ngIf="txtRepassword?.touched && txtRepassword?.errors?.notEqual">*Pass word does not match</p>
+
+        <div class="username" [hidden]="!repass">
+            <ion-input type="text" placeholder="Enter your username" clear-input="true"
+            name="displayname" required #txtUsername="ngModel" ngModel></ion-input>
+        </div>
+        <p class="notify" [hidden]="!repass" *ngIf="txtUsername?.touched && txtUsername.errors?.required">*Username is required</p>
+
+        <div class="divbtnlogin" *ngIf="appear"> 
+            <div class="btnlogin" style="margin-right: 5%;">
+                <button (click)="loginClick(formSignin)" (keydown.enter)="loginClick(formSignin)" [disabled]="txtEmail?.errors?.invalid || txtPassword?.errors?.invalid" >
+                        Log in
+                </button>
+            </div>
+            <div class="textlogin">
+                <p>
+                    <span class="textwhite">If you have not an account</span>
+                    <span class="textclick" (click)="signupClick()">click to sign up</span>
+                </p>
+            </div>
+        </div>
+        <div class="divbtnsignup" *ngIf="repass">
+            <div class="textsignup">
+                <span class="textwhite">Already have account ?</span> <span class="textclick" (click)="backClick()">Sign in</span>
+            </div>
+            <div class="btnsignup">
+                <button  (click)="signup(formSignin)" (keydown.enter)="signup(formSignin)" [disabled]="formSignin.invalid">
+                    Sign up
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>

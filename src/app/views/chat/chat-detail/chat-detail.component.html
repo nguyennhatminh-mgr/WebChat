@@ -1,0 +1,69 @@
+<ng-container *ngIf="chat$ | async as chat" >
+	<ng-container *ngIf=" auth.user$ | async as user" >
+		<div class="title">
+			<a routerLink="/home">BACK TO HOME</a>
+			<div class="subtitle">
+					<!-- https://firestore-megachat.firebaseapp.com/chats/{{ chat.id }} -->
+				<p>	WELCOME TO BOX CHAT, HAVE A GOOD TRIP</p>
+			</div>
+		</div>
+	</ng-container>
+</ng-container>
+<!-- <ion-content fullscreen="true" scroll-events="true" class="setmargin"> -->
+	<ng-container *ngIf="chat$ | async as chat" >
+		<ng-container *ngIf=" auth.user$ | async as user" >
+			<div class="tong" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+				<div #chatBox style="height: 11%;">
+					<div *ngFor="let msg of chat.messages; index as i;trackBy: trackByCreated" 
+					[ngClass]="{'displayright': chat.uid === user.uid || msg.uid === user.uid}" class="boxOfMessage">
+						<div *ngIf="!(chat.uid === user.uid || msg.uid === user.uid)" class="displayflex" style="position: relative;">
+							<!-- <div class="displayflex"> -->
+								<div *ngIf="displayusername && dem==i" class="username"><span >{{ msg.user?.displayName || msg.user?.uid }}</span></div>
+								<div class="displaymessage" >
+									<div class="nameAndAvatar">
+										<!-- <div *ngIf="displayusername"><span >{{ msg.user?.displayName || msg.user?.uid }}</span></div> -->
+										<img [src]="msg.user?.photoURL || '../../../../assets/images/backgroundLogin.jpg'" 
+										(mouseover)="displayusername=true; dem=i;" (mouseout)="displayusername=false; dem=-1;">
+									</div>
+								</div>
+							<!-- </div> --> 
+							<div class="messagecontent">
+								<p>{{ msg.content }}</p>
+							</div>
+						</div>
+						<div *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="displayflex">
+							<div class="btndelete" (click)="cs.deleteMessage(chat, msg)">
+								<!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid"
+								(click)="cs.deleteMessage(chat, msg)" >Delete</button> -->
+								<img src="../../../../assets/images/btndelete.png" alt="">
+							</div>
+							<div class="mymessagecontent">
+								<p>{{ msg.content }}</p>
+							</div>
+							<div class="mydisplaymessage" >
+								<div *ngIf="displayusername && dem==i" class="username"><span >{{ msg.user?.displayName || msg.user?.uid }}</span></div>
+								<div class="nameAndAvatar">
+									<img [src]="msg.user?.photoURL || '../../../../assets/images/backgroundLogin.jpg'" 
+									(mouseover)="displayusername=true; dem=i;" (mouseout)="displayusername=false; dem=-1;">
+								</div>
+								<!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid"
+									(click)="cs.deleteMessage(chat, msg)">Delete</button> -->
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+			</div>
+		</ng-container>
+	</ng-container>
+<!-- </ion-content> -->
+<ng-container *ngIf="chat$ | async as chat" >
+	<ng-container *ngIf=" auth.user$ | async as user" >
+		<div class="sendMessage">
+				<input [(ngModel)]="newMsg" maxlength="100" (keydown.enter)="submit(chat.id)">
+
+				<button (click)="submit(chat.id)" [disabled]="!newMsg">Send</button>
+			</div>
+	</ng-container>
+</ng-container>

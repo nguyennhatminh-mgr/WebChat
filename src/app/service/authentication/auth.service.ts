@@ -38,15 +38,13 @@ export class AuthService {
 	}
 
 	searchUsersByUsername(username: string) {
-		this.afs.collection('users', ref=> ref.where('displayName','==',username)).valueChanges().pipe(
+    return this.afs.collection('users', ref=> ref.where('displayName','==',username)).valueChanges()
+      .pipe(
 			take(1),
 			flatMap(x=>{
 				return x;
 			}),
-			tap((x:any)=>{
-				console.log(x.uid);
-			})
-		).subscribe();
+		);
 	}
 
 	googleSignIn() {

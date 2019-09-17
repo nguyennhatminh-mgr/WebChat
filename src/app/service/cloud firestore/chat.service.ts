@@ -49,62 +49,56 @@ export class ChatService {
 			})
 		);
 	}
-	getChatIdByUserId(userId:string){
+
+	getUserChatLog(){
 		return this.auth.user$.pipe(
-			take(1),
-			map((user:any) => {
-				return this.afs.collection('chatLog', ref=>ref.where('owner','==',user.uid).where('userId','==',userId))
-				.snapshotChanges().pipe(
-					take(1),
-					map(actions => {
-						return actions.map(a => {
-							const id = a.payload.doc.id;
-							return id;
-						});
-					})
-				);
+			switchMap(user => {
+				return this.afs
+					.collection('chats', ref => ref.where('users','array-contains', user.uid).orderBy('lastUpdated','desc'))
+					.snapshotChanges()
+					.pipe(
+						map(actions => {
+							return actions.map(a => {
+								const data: Object = a.payload.doc.data();
+								const id = a.payload.doc.id;
+								return { id, ...data };
+							});
+						})
+					);
 			})
 		);
 	}
-	async create() {
+	getChatIdByUserId(userId:string){
+		return this.auth.user$.pipe(
+			switchMap(user => {
+				return this.afs
+					.collection('chatLog', ref=>ref.where('owner','==',user.uid).where('userId','==',userId))
+					.snapshotChanges()
+					.pipe(
+						map(actions => {
+							return actions.map(a => {
+								const data: Object = a.payload.doc.data();
+								const id = a.payload.doc.id;
+								return { id, ...data };
+							});
+						})
+					);
+			})
+		);
+	}
+	async create(friendId?:string,content?:string) {
 		const { uid } = await this.auth.getUser();
 		const data = {
-			uid,
+			users:[uid,friendId],
 			createdAt: Date.now(),
+			lastUpdated: Date.now(),
 			count: 0,
 			messages: []
 		};
 		const docRef = await this.afs.collection('chats').add(data);
-		await this.updateUserChatLog(docRef.id,'abc','def');
 		return this.router.navigate(['chats', docRef.id]);
 	}
-	async updateUserChatLog(chatId, content?, userId?) {
-		const { uid } = await this.auth.getUser();
-		if (uid) {
-			const ref = this.afs.collection('chatLog').doc(chatId);
-			ref.get().subscribe((snap) => {
-				if (snap.exists) {
-					ref.update({
-						lastUpdated: Date.now(),
-						lastMessage: content,
-						messagedBy: uid
-					})
-				}
-				else {
-					ref.set({
-						userId: userId ? userId : 0,
-						lastUpdated: Date.now(),
-						owner: uid,
-					})
-					const subRef = this.afs.collection('users').doc(uid);
-					subRef.update({
-						chatArray: firestore.FieldValue.arrayUnion(chatId)
-					})
-				}
-			})
-		}
-	}
-	async sendMessage(chatId, content, userId?) {
+	async sendMessage(chatId, content) {
 		const { uid } = await this.auth.getUser();
 		const data = {
 			uid,
@@ -112,9 +106,11 @@ export class ChatService {
 			createdAt: Date.now()
 		};
 		if (uid) {
-			this.updateUserChatLog(chatId, content, userId);
 			const ref = this.afs.collection('chats').doc(chatId);
 			return ref.update({
+				lastUpdated: Date.now(),
+				lastMessage: content,
+				count: firestore.FieldValue.increment(1),
 				messages: firestore.FieldValue.arrayUnion(data)
 			})
 		}

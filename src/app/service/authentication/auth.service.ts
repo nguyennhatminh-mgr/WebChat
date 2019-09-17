@@ -36,7 +36,12 @@ export class AuthService {
 	getUser() {
 		return this.user$.pipe(first()).toPromise();
 	}
-
+	getImageURLByUserId(userId:string){
+		return this.afs.collection('users').doc(userId).valueChanges().pipe(
+			take(1),
+			map((x:any)=>x.photoURL)
+		);
+	}
 	searchUsersByUsername(username: string) {
     return this.afs.collection('users', ref=> ref.where('displayName','==',username)).valueChanges()
       .pipe(

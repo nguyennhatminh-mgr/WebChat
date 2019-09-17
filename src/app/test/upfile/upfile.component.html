@@ -1,0 +1,8 @@
+<!-- <input type="file" (change)="uploadFile($event)"> -->
+<input type="file" (change)="check($event)">
+<div>{{ uploadPercent | async }}</div>
+<a [href]="downloadURL | async">{{ downloadURL | async }}</a>
+<!-- <img [src]="downloadURL | async" alt=""> -->
+<audio controls *ngIf="downloadURL">
+    <source src="{{downloadURL}}" type="audio/mpeg">
+</audio>

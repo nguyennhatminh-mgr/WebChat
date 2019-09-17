@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { ChatService } from 'src/app/service/cloud firestore/chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/service/authentication/auth.service';
+import{UpfileService}from '../../../service/upfile.service';
+import { take, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat-detail',
@@ -16,10 +18,12 @@ export class ChatDetailComponent implements OnInit {
   displayusername:boolean;
   dem=-1;
   scrolltop;
+  downloadURL:Observable<any>;
   constructor(
     public cs: ChatService,
     private route: ActivatedRoute,
-    public auth: AuthService
+    public auth: AuthService,
+    public upfile:UpfileService
   ) {
       this.displayusername=false;
    }
@@ -44,4 +48,18 @@ export class ChatDetailComponent implements OnInit {
   trackByCreated(i, msg){
     return msg.createdAt;
   }
+
+  scrollHandler(e){
+    console.log(e);
+  }
+  upFile(event){
+    this.upfile.uploadFile(event).pipe(
+      take(1),
+      tap(x=>{
+        console.log(x);
+        this.downloadURL=x;
+      })
+    ).subscribe();
+  }
+
 }

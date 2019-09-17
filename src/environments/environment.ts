@@ -9,7 +9,7 @@ export const environment = {
     authDomain: "angularfire-1aa89.firebaseapp.com",
     databaseURL: "https://angularfire-1aa89.firebaseio.com",
     projectId: "angularfire-1aa89",
-    storageBucket: "",
+    storageBucket: "angularfire-1aa89.appspot.com",
     messagingSenderId: "330366994048",
     appId: "1:330366994048:web:9bf968745366b25f"
   }

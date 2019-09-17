@@ -12,6 +12,7 @@ import { auth } from 'firebase';
 export class AuthService {
   userData: Observable<firebase.User>;
   user$: Observable<any>;
+  check:boolean;
   constructor(
     private angularFireAuth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -93,7 +94,8 @@ export class AuthService {
   }
 
   /* Sign in */
-  SignIn(email: string, password: string) {
+  SignIn(email: string, password: string):boolean {
+    // var check=true;
     this.angularFireAuth
       .auth
       .signInWithEmailAndPassword(email, password)
@@ -113,7 +115,9 @@ export class AuthService {
       })
       .catch(err => {
         console.log('Something is wrong:', err.message);
+        this.check = false;
       });
+    return this.check;
   }
 
   /* Sign out */

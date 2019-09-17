@@ -41,7 +41,7 @@
 }
 .cottrai .title{
     display: flex;
-    border-bottom: 1px solid #1aaa1a;
+    border-bottom: 0.5px solid #1aaa1a;
     margin: 5px;
     align-items: center;
     height: 8%;
@@ -60,20 +60,22 @@
     display: flex;
     align-items: center;
     border-bottom: 1px solid #1aaa1a;
-    box-shadow: 0px 1px 1px #1aaa1a;
+    // box-shadow: 0px 1px 1px #1aaa1a;
 }
 .cottrai .search input{
     width: 98%;
     padding: 5px 10px;
-    background-color: #0200fd;
+    border-top: 0px;
+    border-bottom: 1px solid gray;
+    border-left: 0.5px solid gray;
     // border: 1px solid #1aaa1a;
-    border-radius: 20px;
+    // border-radius: 20px;
     height: 70%;
     margin: 0% 1%;
-    color: white;
+    // color: white;
 }
 ::placeholder{
-    color: wheat;
+    // color: wheat;
 }
 .cottrai .danhsachuser{
     width: 100%;
@@ -105,7 +107,7 @@
 //Custom scroll bar
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
 }
 
 /* Track */

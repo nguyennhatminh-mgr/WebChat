@@ -1,45 +1,69 @@
+.ngoai{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.ngoai img.imgngoai{
+    position: absolute;
+    width: 100%;
+    opacity: 1;
+}
+.ngoai .den{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.56);
+}
 .tong{
-    width: 50%;
+    width: 40%;
     margin: auto;
+    position: absolute;
+    background-color: white;
 }
 .tong .title{
-    background: #1aaa1a;
     width: 100%;
-    height: 40px;
-    text-align:  center;
-    border-radius: 5px;
-    box-shadow: -2px 5px rgba(0, 128, 0, 0.438);
+    justify-content: flex-start;
+    display: flex;
+    align-items: center;
+    padding-left: 6%;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 .title h3.left{
-    color: white;
-    line-height: 40px;
-    text-transform: uppercase;
+    color: gray;
+}
+.title img{
+    width: 6%;
+    height: 6%;
+    margin-right: 1%;
 }
 
 .tong .login-form {
     // min-width: 250px;
     // width: 500px;
     width: 100%;
-    border: 0.5px solid rgb(219, 218, 218);
-    border-radius: 10px;
-    margin-top: 50px;
-    padding: 20px;
-    box-shadow: -6px 13px 10px rgba(0, 0, 0, 0.5);
-    background-image: url("../../../assets/images/backgroundLogin1.jpg") ;
+    padding: 0px 6% 6% 6%;
   }
 .login-form .subtitle{
-    text-align: center;
-    color:white;
+    padding-left: 1%;
+    margin-top: 0px;
+}
+.login-form .email ion-input,.login-form .password ion-input, .login-form .reenterpassword ion-input,
+ .login-form .username ion-input{
+    cursor: pointer;
+    border-bottom: 1px solid black;
+    background-color: white;
+    color: black;
 }
 
 .login-form .email,.login-form .password, .login-form .reenterpassword, .login-form .username{
-    border: 1px solid #1aaa1a;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    box-shadow: -2px 3px rgba(3, 245, 3, 0.3);
-    background-color: white;
-    color: black;
+    margin-bottom: 3%;
+}
+.bordertouch{
+    border-bottom: 1px solid red !important;
 }
 
 .divbtnlogin{
@@ -49,10 +73,10 @@
     align-items: center;
 }
 .btnlogin{
-    width: 22%;
+    width: 20%;
 }
 .btnlogin button, .btnsignup button{
-    padding: 10px 20px;
+    padding: 7% 13%;
     font-size: 18px;
     background-color: #1aaa1a;
     color: white;
@@ -60,33 +84,41 @@
     cursor: pointer;
 }
 .textlogin{
-    width: 100%;
+    width: 80%;
     display: flex;
     align-items: center;
     height: 100%;
     justify-content: flex-end;
 }
-
+.textlogin p{
+    width: 80%;
+}
 
 .divbtnsignup{
     width: 100%;
-    padding-top: 10px;
+    padding-top: 3%;
     display: flex;
     align-items: center;
 }
 .divbtnsignup .btnsignup{
     display: flex;
-    width: 70%;
+    width: 30%;
     justify-content: flex-end;
 }
+.divbtnsignup .btnsignup button{
+    width: 70%;
+}
 .divbtnsignup .textsignup{
-    width: 50%;
+    width: 70%;
 }
 
 .textclick{
-    margin-left: 5px;
-    color:#31fd31;
+    margin-left: 1%;
+    color:blue;
     cursor: pointer;
+}
+.textclick:hover{
+    color: #1aaa1a;
 }
 
 p.notify{
@@ -97,4 +129,7 @@ p.notify{
 
 .textwhite{
     color: white;
+}
+.disable{
+    background-color: #2d5f2d8a !important;
 }

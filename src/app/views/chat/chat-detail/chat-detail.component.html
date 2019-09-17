@@ -4,7 +4,9 @@
 			<a routerLink="/home">BACK TO HOME</a>
 			<div class="subtitle">
 					<!-- https://firestore-megachat.firebaseapp.com/chats/{{ chat.id }} -->
-				<p>	WELCOME TO BOX CHAT, HAVE A GOOD TRIP</p>
+				<div class="coverptag">
+					<p>	WELCOME TO BOX CHAT, HAVE A GOOD TRIP</p>
+				</div>
 			</div>
 		</div>
 	</ng-container>
@@ -12,33 +14,39 @@
 <!-- <ion-content fullscreen="true" scroll-events="true" class="setmargin"> -->
 	<ng-container *ngIf="chat$ | async as chat" >
 		<ng-container *ngIf=" auth.user$ | async as user" >
-			<div class="tong" #scrollMe [scrollTop]="scrollMe.scrollHeight">
-				<div #chatBox style="height: 11%;">
+			<div class="tong" #scrollMe [scrollTop]="scrollMe.scrollHeight" >
+				<div #chatBox >
 					<div *ngFor="let msg of chat.messages; index as i;trackBy: trackByCreated" 
-					[ngClass]="{'displayright': chat.uid === user.uid || msg.uid === user.uid}" class="boxOfMessage">
-						<div *ngIf="!(chat.uid === user.uid || msg.uid === user.uid)" class="displayflex" style="position: relative;">
+					 class="boxOfMessage">
+					<!-- [ngClass]="{'displayright': chat.uid === user.uid || msg.uid === user.uid}" class="boxOfMessage"> -->
+						<div *ngIf="!(msg.uid === user.uid)" class="displayflex" style="position: relative; width: 50%;">
+						<!-- <div *ngIf="!(chat.uid === user.uid || msg.uid === user.uid)" class="displayflex" style="position: relative;"> -->
 							<!-- <div class="displayflex"> -->
-								<div *ngIf="displayusername && dem==i" class="username"><span >{{ msg.user?.displayName || msg.user?.uid }}</span></div>
+								
 								<div class="displaymessage" >
 									<div class="nameAndAvatar">
 										<!-- <div *ngIf="displayusername"><span >{{ msg.user?.displayName || msg.user?.uid }}</span></div> -->
+										<div *ngIf="displayusername && dem==i" class="username"><span >{{ msg.user?.displayName || msg.user?.uid }}</span></div>
 										<img [src]="msg.user?.photoURL || '../../../../assets/images/backgroundLogin.jpg'" 
 										(mouseover)="displayusername=true; dem=i;" (mouseout)="displayusername=false; dem=-1;">
 									</div>
 								</div>
 							<!-- </div> --> 
 							<div class="messagecontent">
-								<p>{{ msg.content }}</p>
+								<p>{{ msg.content }} </p>
 							</div>
 						</div>
-						<div *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="displayflex">
-							<div class="btndelete" (click)="cs.deleteMessage(chat, msg)">
-								<!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid"
-								(click)="cs.deleteMessage(chat, msg)" >Delete</button> -->
-								<img src="../../../../assets/images/btndelete.png" alt="">
-							</div>
-							<div class="mymessagecontent">
-								<p>{{ msg.content }}</p>
+						<!-- <div *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="displayflex"> -->
+						<div *ngIf=" msg.uid === user.uid" class="displayflex" style="width: 100%; justify-content: flex-end;">
+							<div class="displayflex" style="width: 50%; justify-content: flex-end;">
+								<div class="btndelete" (click)="cs.deleteMessage(chat, msg)">
+									<!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid"
+									(click)="cs.deleteMessage(chat, msg)" >Delete</button> -->
+									<img src="../../../../assets/images/btndelete.png" alt="">
+								</div>
+								<div class="mymessagecontent">
+									<p>{{ msg.content }} </p>
+								</div>
 							</div>
 							<div class="mydisplaymessage" >
 								<div *ngIf="displayusername && dem==i" class="username"><span >{{ msg.user?.displayName || msg.user?.uid }}</span></div>
@@ -49,21 +57,43 @@
 								<!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid"
 									(click)="cs.deleteMessage(chat, msg)">Delete</button> -->
 							</div>
+
 						</div>
+						
+					</div>
+					<div >
+						<img class="imghienthi" [src]="downloadURL" alt="">
 					</div>
 				</div>
-
 				
 			</div>
-		</ng-container>
+		</ng-container> 
 	</ng-container>
 <!-- </ion-content> -->
 <ng-container *ngIf="chat$ | async as chat" >
 	<ng-container *ngIf=" auth.user$ | async as user" >
 		<div class="sendMessage">
-				<input [(ngModel)]="newMsg" maxlength="100" (keydown.enter)="submit(chat.id)">
+				<input class="btnsend" [(ngModel)]="newMsg" (keydown.enter)="submit(chat.id)">
 
 				<button (click)="submit(chat.id)" [disabled]="!newMsg">Send</button>
+
+				<!-- <div class="btnupfile">
+					<input type="file" (change)="upFile($event)" style="display:none;">
+				</div> -->
+				<!-- <div class="inputfile-box">
+					<input type="file" id="file" class="inputfile" (change)="upFile($event)">
+					<label for="file">
+					  <span id="file-name" class="file-box"></span>
+					  <span class="file-button">
+						<i class="fa fa-upload" aria-hidden="true"></i>
+						Select File
+					  </span>
+					</label>
+				</div> -->
+				<div id="upload-file-container" >
+					<input type="file" (change)="upFile($event)"/>
+				 </div>
+				<!-- <img src="../../../../assets/images/iconupfile.jpg" alt="" (change)> -->
 			</div>
 	</ng-container>
 </ng-container>

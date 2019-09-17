@@ -13,12 +13,12 @@
                 <!-- <span class="username">welcome {{ user.uid }} to box chat</span> -->
             </p>
             <!-- <img [src]="user.photoURL" width="50px"> -->
-            <div class="anhuser"><img [src]="url"></div>
+            <div class="anhuser"><img [src]="user.photoURL || url"></div>
             
             <button class="signOut" (click)="auth.signOut()">Sign Out</button>
             <hr>
 
-            <button class="joinYourChat" routerLink="/chats/WVcW2Ra1QbsXWAHNF34f">Join Your Chat 🎪</button>
+            <button class="joinYourChat" routerLink="/chats/lEs3RfqsojxvZNPCVaKM">Join Your Chat 🎪</button>
             <button class="button is-info" (click)="cs.create()">Revise your information</button>
 
             <hr>

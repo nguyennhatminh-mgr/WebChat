@@ -59,13 +59,20 @@
     // border-radius: 10px;
     margin-bottom: 10px;
 }
-.sendMessage input{
+.sendMessage input.btnsend{
     width: 70%;
     border-radius: 15px;
     border: 1px solid #1aaa1a;
     height: 40px;
     padding-left: 10px;
 }
+.sendMessage input.btnupfile{
+    // border: 1px solid #1aaa1a;
+}
+input[type="file"]::-webkit-file-upload-button{
+    /* style goes here */
+    border: 1px solid #1aaa1a;
+ }
 .sendMessage button{
     height: 40px;
     padding: 10px;
@@ -77,6 +84,12 @@
     margin-left: 1%;
     cursor: pointer;
     animation: anichuyenmau 5s infinite;
+}
+.sendMessage img{
+    width: 35px;
+    height: 35px;
+    margin-left: 10px;
+    cursor: pointer;
 }
 
 @keyframes anichuyenmau{
@@ -117,12 +130,20 @@
     align-items: center;
     
 }
-.title .subtitle p{
+.title .subtitle .coverptag{
     background-color: #1aaa1a;
     border-radius: 10px;
     padding: 10px;
+    overflow: hidden;
+    animation: anichuyenmau 5s infinite ;
+}
+.title .subtitle .coverptag p{
     margin: 0px;
-    animation: anichuyenmau 5s infinite;
+    animation: anitextdichuyen 15s infinite cubic-bezier(0, -0.08, 0.82, 0.99);
+}
+@keyframes anitextdichuyen{
+    0%{transform: translateX(102%);}
+    100%{transform: translateX(-102%);}
 }
 .title a{
     padding: 10px 10px;
@@ -138,6 +159,7 @@
     width: 100%;
     height: 100%;
     align-items: center;
+    margin-bottom: 1%;
 }
 .displaymessage,.mydisplaymessage{
     display: flex;
@@ -157,7 +179,7 @@
 
 .mydisplaymessage .nameAndAvatar,.displaymessage .nameAndAvatar{
     display: flex;
-    align-items: center;
+    // align-items: center;
     transition: 0.4s;
 }
 .mydisplaymessage .nameAndAvatar{
@@ -174,7 +196,10 @@
     padding: 3px 5px;
     position: absolute;
     transition: 0.4s;
-    top: -30px;
+    top: -20px;
+}
+.mydisplaymessage .username{
+    right: 0px;
 }
 
 .messagecontent{
@@ -182,11 +207,14 @@
     justify-content: flex-start;
     align-items: center;
     margin-left: 5px;
+    width: 93%;
 }
 .mymessagecontent{
     display: flex;
     align-items: center;
     margin-right: 5px;
+    justify-content: flex-end;
+    max-width: 93%;
 }
 .messagecontent p, .mymessagecontent p{
     background-color: rgb(0, 153, 255);
@@ -194,7 +222,10 @@
     padding:  10px 12px;
     // border: 1px solid #29487d;
     margin: 0px;
-    color: white; 
+    color: white;
+}
+.mymessagecontent p{
+    
 }
 .displayright{
     justify-content: flex-end;
@@ -219,8 +250,12 @@
 .tong{
     overflow-y: scroll;
     height: 81.7%;
+    padding-top: 10px;
 }
-
+.tong .imghienthi{
+    width: 30%;
+    border-radius: 3%;
+}
 //Custom scroll bar
 /* width */
 ::-webkit-scrollbar {
@@ -243,3 +278,54 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #b30000; 
 }
+
+/*Them*/
+.inputfile-box {
+    position: relative;
+  }
+  
+  .inputfile {
+    display: none;
+  }
+  
+  .container {
+    display: inline-block;
+    width: 100%;
+  }
+  
+  .file-box {
+    display: inline-block;
+    width: 100%;
+    border: 1px solid;
+    padding: 5px 0px 5px 5px;
+    box-sizing: border-box;
+    height: calc(2rem - 2px);
+  }
+  
+.file-button {
+    background: red;
+    padding: 5px;
+    position: absolute;
+    border: 1px solid;
+    top: 0px;
+    right: 0px;
+}
+
+
+#upload-file-container {
+    width: 70px;
+    height: 30px;
+    position: relative;
+    border: dashed 1px black;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    margin-left: 10px;
+}
+ 
+ #upload-file-container input[type="file"]
+ {
+    margin: 0;
+    opacity: 0;
+    font-size: 100px; 
+ }

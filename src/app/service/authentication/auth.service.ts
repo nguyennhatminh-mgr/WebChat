@@ -84,7 +84,29 @@ export class AuthService {
     return this.router.navigate(['/login']);
   }
 
-
+	/* Sign up */
+	SignUp(email: string, password: string, username?: string) {
+		this.angularFireAuth
+			.auth
+			.createUserWithEmailAndPassword(email, password)
+			.then(async (res: any) => {
+				await this.updateUserProfile({ displayName: username });
+				const user = res.user;
+				const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+				const data: User = {
+					uid: user.uid,
+					email: user.email,
+					displayName: username,
+					photoURL: user.photoURL
+				};
+				userRef.set(data);
+				console.log('Successfully signed up!', res);
+				return this.router.navigate(['/home']);
+			})
+			.catch(error => {
+				console.log('Something is wrong:', error.message);
+			});
+	}
 
 
   /* Sign in */

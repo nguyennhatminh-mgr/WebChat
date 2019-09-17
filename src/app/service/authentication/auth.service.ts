@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
-import { switchMap, first, flatMap, tap,take } from 'rxjs/operators';
+import { switchMap, first, flatMap, tap,take, map } from 'rxjs/operators';
 import { User } from './../../models/user.model';
 import { auth } from 'firebase';
 @Injectable({
@@ -41,7 +41,7 @@ export class AuthService {
     return this.afs.collection('users', ref=> ref.where('displayName','==',username)).valueChanges()
       .pipe(
 			take(1),
-			flatMap(x=>{
+			map(x=>{
 				return x;
 			}),
 		);

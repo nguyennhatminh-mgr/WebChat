@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
 
   repass=false;
   appear=true;
+  check=true;
   constructor(private auth:AuthService) { }
 
   ngOnInit() {
@@ -20,9 +21,11 @@ export class LoginComponent implements OnInit {
   loginClick(formSignin: NgForm){
     // console.log("Log in is success");
     console.log(formSignin.value.email);
-    this.auth.SignIn(formSignin.value.email,formSignin.value.password);
+    this.check=this.auth.SignIn(formSignin.value.email,formSignin.value.password);
+    this.checkInvalidAcount();
     formSignin.value.email="";
     formSignin.value.password="";
+    // return this.check;
   }
   signupClick(){
     this.repass=true;
@@ -42,5 +45,13 @@ export class LoginComponent implements OnInit {
     formSignup.value.password="";
     formSignup.value.displayname="";
     formSignup.value.repassword="";
+  }
+  checkInvalidAcount(){
+    if(this.check){
+      console.log("Login successful");
+    }
+    else{
+      console.log("Error");
+    }
   }
 }

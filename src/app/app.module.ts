@@ -9,15 +9,24 @@ import { IonicModule } from '@ionic/angular';
 import { LoginComponent } from './authentication/login/login.component';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { HomeComponent } from './views/home/home.component';
 import { ChatDetailComponent } from './views/chat/chat-detail/chat-detail.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ChatModule } from './views/chat/chat.module';
+import { ScrollableDirective } from './service/scrollable.directive';
+import { UpfileComponent } from './test/upfile/upfile.component';
+import { DropZoneDirective } from './test/drop-zone.directive';
+import { FileSizePipe } from './test/file-size.pipe';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    ChatDetailComponent
+    ScrollableDirective,
+    UpfileComponent,
+    DropZoneDirective,
+    FileSizePipe
   ],
   imports: [
     BrowserModule,
@@ -28,6 +37,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    ChatModule,
+    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

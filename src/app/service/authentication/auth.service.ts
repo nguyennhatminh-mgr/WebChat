@@ -10,24 +10,27 @@ import { auth } from 'firebase';
 	providedIn: 'root'
 })
 export class AuthService {
-	userData: Observable<firebase.User>;
-	user$: Observable<any>;
-	constructor(
-		private angularFireAuth: AngularFireAuth,
-		private afs: AngularFirestore,
-		private router: Router,
-	) {
-		this.userData = angularFireAuth.authState;
-		this.user$ = angularFireAuth.authState.pipe(
-			switchMap(user => {
-				if (user) {
-					return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
-				} else {
-					return of(null);
-				}
-			})
-		)
-	}
+
+  userData: Observable<firebase.User>;
+  user$: Observable<any>;
+  check:boolean;
+  constructor(
+    private angularFireAuth: AngularFireAuth,
+    private afs: AngularFirestore,
+    private router:Router,
+  ) {
+    this.userData = angularFireAuth.authState;
+    this.user$ = angularFireAuth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
+        } else {
+          return of(null);
+        }
+      })
+    )
+  }
+
 
 
 	getUser() {
@@ -67,6 +70,7 @@ export class AuthService {
 		return userRef.set(data);
 	}
 
+
 	private async updateUserProfile(profile) {
 		let user = this.angularFireAuth.auth.currentUser;
 		user.updateProfile({
@@ -75,58 +79,40 @@ export class AuthService {
 		}).then(() => console.log('success'), () => console.log('error'));
 	}
 
-	async signOut() {
-		await this.angularFireAuth.auth.signOut();
-		return this.router.navigate(['/']);
-	}
+  async signOut() {
+    await this.angularFireAuth.auth.signOut();
+    return this.router.navigate(['/login']);
+  }
 
-	/* Sign up */
-	SignUp(email: string, password: string, username?: string) {
-		this.angularFireAuth
-			.auth
-			.createUserWithEmailAndPassword(email, password)
-			.then(async (res: any) => {
-				await this.updateUserProfile({ displayName: username });
-				const user = res.user;
-				const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
-				const data: User = {
-					uid: user.uid,
-					email: user.email,
-					displayName: username,
-					photoURL: user.photoURL
-				};
-				userRef.set(data);
-				console.log('Successfully signed up!', res);
-				return this.router.navigate(['/home']);
-			})
-			.catch(error => {
-				console.log('Something is wrong:', error.message);
-			});
-	}
 
-	/* Sign in */
-	SignIn(email: string, password: string) {
-		this.angularFireAuth
-			.auth
-			.signInWithEmailAndPassword(email, password)
-			.then((res: any) => {
-				const user = res.user;
-				console.log(user);
-				const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
-				const data: User = {
-					uid: user.uid,
-					email: user.email,
-					displayName: user.displayName,
-					photoURL: user.photoURL
-				}
-				userRef.update(data);
-				console.log('Successfully signed in!');
-				return this.router.navigate(['/home']);
-			})
-			.catch(err => {
-				console.log('Something is wrong:', err.message);
-			});
-	}
+
+
+  /* Sign in */
+  SignIn(email: string, password: string):boolean {
+    // var check=true;
+    this.angularFireAuth
+      .auth
+      .signInWithEmailAndPassword(email, password)
+      .then((res:any) => {
+        const user = res.user;
+        console.log(user);
+        const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+        const data:User = {
+          uid : user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL
+        }
+        userRef.set(data);
+        console.log('Successfully signed in!');
+        return this.router.navigate(['/home']);
+      })
+      .catch(err => {
+        console.log('Something is wrong:', err.message);
+        this.check = false;
+      });
+    return this.check;
+  }
 
 	/* Sign out */
 	SignOut() {

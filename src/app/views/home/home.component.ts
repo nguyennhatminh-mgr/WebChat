@@ -10,20 +10,17 @@ import { tap } from 'rxjs/operators';
 	styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-	userChats$;
-	userId;
-	constructor(public auth: AuthService, public cs: ChatService) { }
-	ngOnInit() {
-		this.userChats$ = this.cs.getUserChats();
-		// this.cs.getChatIdByUserId("555").subscribe(
-		// 	x => {
-		// 		x.pipe(
-		// 			tap(a=>{
-		// 				console.log(a);
-		// 			})
-		// 		).subscribe()
-		// 	}
-		// )
-	}
+  userChats$;
+  url="../../../../assets/images/backgroundLogin.jpg";
+  constructor(public auth: AuthService, public cs: ChatService) {}
+  ngOnInit() {
+    this.userChats$ = this.cs.getUserChats();
+  }
 
+  getUrl(){
+    if(this.auth.user$)
+    {
+      
+    }
+  }
 }

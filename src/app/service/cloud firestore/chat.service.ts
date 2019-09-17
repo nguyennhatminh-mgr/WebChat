@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../authentication/auth.service';
 import { Router } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap, take } from 'rxjs/operators';
 import { firestore } from 'firebase';
 import { Observable, combineLatest, of } from 'rxjs';
 
@@ -26,51 +26,93 @@ export class ChatService {
 			.snapshotChanges()
 			.pipe(
 				map(doc => {
-					return { id: doc.payload.id, ...doc.payload.data()};
+					return { id: doc.payload.id, ...doc.payload.data() };
 				})
 			);
 	}
 
 	getUserChats() {
 		return this.auth.user$.pipe(
-		  switchMap(user => {
-			return this.afs
-			  .collection('chats', ref => ref.where('uid', '==', user.uid))
-			  .snapshotChanges()
-			  .pipe(
-				map(actions => {
-				  return actions.map(a => {
-					const data: Object = a.payload.doc.data();
-					const id = a.payload.doc.id;
-					return { id, ...data };
-				  });
-				})
-			  );
-		  })
+			switchMap(user => {
+				return this.afs
+					.collection('chats', ref => ref.where('uid', '==', user.uid))
+					.snapshotChanges()
+					.pipe(
+						map(actions => {
+							return actions.map(a => {
+								const data: Object = a.payload.doc.data();
+								const id = a.payload.doc.id;
+								return { id, ...data };
+							});
+						})
+					);
+			})
 		);
-	  }
-
-	async create(){
-		const {uid} = await this.auth.getUser();
+	}
+	getChatIdByUserId(userId:string){
+		return this.auth.user$.pipe(
+			take(1),
+			map((user:any) => {
+				return this.afs.collection('chatLog', ref=>ref.where('owner','==',user.uid).where('userId','==',userId))
+				.snapshotChanges().pipe(
+					take(1),
+					map(actions => {
+						return actions.map(a => {
+							const id = a.payload.doc.id;
+							return id;
+						});
+					})
+				);
+			})
+		);
+	}
+	async create() {
+		const { uid } = await this.auth.getUser();
 		const data = {
 			uid,
-			createdAt : Date.now(),
+			createdAt: Date.now(),
 			count: 0,
 			messages: []
 		};
 		const docRef = await this.afs.collection('chats').add(data);
-
-		return this.router.navigate(['chats',docRef.id]);
+		await this.updateUserChatLog(docRef.id,'abc','def');
+		return this.router.navigate(['chats', docRef.id]);
 	}
-
-	async sendMessage(chatId, content){
-		const {uid} = await this.auth.getUser();
+	async updateUserChatLog(chatId, content?, userId?) {
+		const { uid } = await this.auth.getUser();
+		if (uid) {
+			const ref = this.afs.collection('chatLog').doc(chatId);
+			ref.get().subscribe((snap) => {
+				if (snap.exists) {
+					ref.update({
+						lastUpdated: Date.now(),
+						lastMessage: content,
+						messagedBy: uid
+					})
+				}
+				else {
+					ref.set({
+						userId: userId ? userId : 0,
+						lastUpdated: Date.now(),
+						owner: uid,
+					})
+					const subRef = this.afs.collection('users').doc(uid);
+					subRef.update({
+						chatArray: firestore.FieldValue.arrayUnion(chatId)
+					})
+				}
+			})
+		}
+	}
+	async sendMessage(chatId, content, userId?) {
+		const { uid } = await this.auth.getUser();
 		const data = {
 			uid,
 			content,
 			createdAt: Date.now()
 		};
-		if (uid){
+		if (uid) {
+			this.updateUserChatLog(chatId, content, userId);
 			const ref = this.afs.collection('chats').doc(chatId);
 			return ref.update({
 				messages: firestore.FieldValue.arrayUnion(data)
@@ -78,7 +120,7 @@ export class ChatService {
 		}
 	}
 
-	joinUsers(chat$: Observable<any>){
+	joinUsers(chat$: Observable<any>) {
 		let chat;
 		const joinKeys = {};
 
@@ -96,7 +138,7 @@ export class ChatService {
 			map(arr => {
 				arr.forEach(v => (joinKeys[(<any>v).uid] = v));
 				chat.messages = chat.messages.map(v => {
-					return { ...v, user: joinKeys[v.uid]};
+					return { ...v, user: joinKeys[v.uid] };
 				});
 				return chat;
 			})

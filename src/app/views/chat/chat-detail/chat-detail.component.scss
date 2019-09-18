@@ -282,31 +282,35 @@ input[type="file"]::-webkit-file-upload-button{
 /*Them*/
 .inputfile-box {
     position: relative;
-  }
+    width: 5%;
+    // margin-left: 2%;
+    text-align: center;
+}
   
-  .inputfile {
+.inputfile {
     display: none;
-  }
+}
   
-  .container {
+.container {
     display: inline-block;
     width: 100%;
-  }
+}
   
-  .file-box {
+.file-box {
     display: inline-block;
-    width: 100%;
+    // width: 100%;
     border: 1px solid;
     padding: 5px 0px 5px 5px;
     box-sizing: border-box;
     height: calc(2rem - 2px);
-  }
+}
   
 .file-button {
-    background: red;
+    width: 100%;
+    background-color: yellow;
     padding: 5px;
     position: absolute;
-    border: 1px solid;
+    border: 1px dashed green;
     top: 0px;
     right: 0px;
 }

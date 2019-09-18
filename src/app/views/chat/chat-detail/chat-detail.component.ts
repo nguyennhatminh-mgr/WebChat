@@ -19,6 +19,7 @@ export class ChatDetailComponent implements OnInit {
   dem=-1;
   scrolltop;
   downloadURL:Observable<any>;
+  type="";
   constructor(
     public cs: ChatService,
     private route: ActivatedRoute,
@@ -29,12 +30,22 @@ export class ChatDetailComponent implements OnInit {
    }
 
   ngOnInit() {
-    let chatId = this.route.snapshot.paramMap.get('id');
-    if (!chatId){
-      chatId = "L8DXImtGfWNst2znSAZu";
-    }
-    const source = this.cs.get(chatId);
-    this.chat$ = this.cs.joinUsers(source);
+    this.route.params.subscribe(
+      params=> {
+        let chatId = params['id'];
+        if (!chatId){
+          chatId = "L8DXImtGfWNst2znSAZu";
+        }
+        const source = this.cs.get(chatId);
+        this.chat$ = this.cs.joinUsers(source);
+      }
+    )
+    // let chatId = this.route.snapshot.paramMap.get('id');
+    // if (!chatId){
+    //   chatId = "L8DXImtGfWNst2znSAZu";
+    // }
+    // const source = this.cs.get(chatId);
+    // this.chat$ = this.cs.joinUsers(source);
   }
 
   submit(chatId){
@@ -58,6 +69,7 @@ export class ChatDetailComponent implements OnInit {
       tap(x=>{
         console.log(x);
         this.downloadURL=x;
+        this.type="image";
       })
     ).subscribe();
   }

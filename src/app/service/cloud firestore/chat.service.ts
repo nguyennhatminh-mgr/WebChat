@@ -54,7 +54,7 @@ export class ChatService {
 		return this.auth.user$.pipe(
 			switchMap(user => {
 				return this.afs
-					.collection('chats', ref => ref.where('users','array-contains', user.uid).orderBy('lastUpdated','desc'))
+					.collection('chats', ref => ref.where(`users.${user.uid}`,'==', true).orderBy('lastUpdated','desc'))
 					.snapshotChanges()
 					.pipe(
 						map(actions => {
@@ -72,13 +72,14 @@ export class ChatService {
 		return this.auth.user$.pipe(
 			switchMap(user => {
 				return this.afs
-					.collection('chatLog', ref=>ref.where('owner','==',user.uid).where('userId','==',userId))
+					.collection('chats', ref=>ref.where(`users.${user.uid}`,'==',true).where(`users.${userId}`,'==',true))
 					.snapshotChanges()
 					.pipe(
 						map(actions => {
 							return actions.map(a => {
 								const data: Object = a.payload.doc.data();
 								const id = a.payload.doc.id;
+								// this.router.navigate(['chats',id]);
 								return { id, ...data };
 							});
 						})
@@ -87,16 +88,22 @@ export class ChatService {
 		);
 	}
 	async create(friendId?:string,content?:string) {
+		console.log('a');
 		const { uid } = await this.auth.getUser();
+		let a = {};
+		a[uid]=true;
+		a[friendId]=true;
 		const data = {
-			users:[uid,friendId],
+			users:a,
 			createdAt: Date.now(),
 			lastUpdated: Date.now(),
 			count: 0,
 			messages: []
 		};
+		console.log('b');
 		const docRef = await this.afs.collection('chats').add(data);
-		return this.router.navigate(['chats', docRef.id]);
+		console.log('c');
+		this.router.navigate(['chats', docRef.id]);
 	}
 	async sendMessage(chatId, content) {
 		const { uid } = await this.auth.getUser();

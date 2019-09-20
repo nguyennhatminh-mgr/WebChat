@@ -54,7 +54,7 @@ export class ChatService {
 		return this.auth.user$.pipe(
 			switchMap(user => {
 				return this.afs
-					.collection('chats', ref => ref.where(`users.${user.uid}`,'==', true).orderBy('lastUpdated','desc'))
+					.collection('chats', ref => ref.where(`users.${user.uid}`,'==', true))
 					.snapshotChanges()
 					.pipe(
 						map(actions => {
@@ -63,7 +63,14 @@ export class ChatService {
 								const id = a.payload.doc.id;
 								return { id, ...data };
 							});
-						})
+						}),
+						// map((data)=>{
+						// 	data.sort((a:any,b:any)=>{
+						// 		let key1 = new Date(a.updatedAt);
+						// 		let key2 = new Date(b.updatedAt);
+						// 		return key1<key2 ? -1 : 1;
+						// 	})
+						// })
 					);
 			})
 		);
@@ -95,6 +102,7 @@ export class ChatService {
 		a[friendId]=true;
 		const data = {
 			users:a,
+			user:uid,
 			createdAt: Date.now(),
 			lastUpdated: Date.now(),
 			count: 0,
@@ -105,11 +113,13 @@ export class ChatService {
 		console.log('c');
 		this.router.navigate(['chats', docRef.id]);
 	}
-	async sendMessage(chatId, content) {
+	async sendMessage(chatId, content, type, fileURL?) {
 		const { uid } = await this.auth.getUser();
 		const data = {
 			uid,
 			content,
+			type,
+			fileURL:fileURL? fileURL:'',
 			createdAt: Date.now()
 		};
 		if (uid) {

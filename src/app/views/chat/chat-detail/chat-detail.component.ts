@@ -52,7 +52,7 @@ export class ChatDetailComponent implements OnInit {
     if (!this.newMsg) {
       return alert('you need to enter something');
     }
-    this.cs.sendMessage(chatId, this.newMsg);
+    this.cs.sendMessage(chatId, this.newMsg, 'message');
     this.newMsg = '';
   }
 

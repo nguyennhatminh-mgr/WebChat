@@ -3,9 +3,9 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../authentication/auth.service';
 import { Router } from '@angular/router';
-import { map, switchMap, tap, take } from 'rxjs/operators';
+import { map, switchMap, tap, take, mergeMap, concatAll, combineAll, zip, concatMap } from 'rxjs/operators';
 import { firestore } from 'firebase';
-import { Observable, combineLatest, of } from 'rxjs';
+import { Observable, combineLatest, of, forkJoin } from 'rxjs';
 
 
 @Injectable({
@@ -44,7 +44,7 @@ export class ChatService {
 								const id = a.payload.doc.id;
 								return { id, ...data };
 							});
-						})
+						}),
 					);
 			})
 		);
@@ -64,6 +64,7 @@ export class ChatService {
 								return { id, ...data };
 							});
 						}),
+						// concatAll()
 						// map((data)=>{
 						// 	data.sort((a:any,b:any)=>{
 						// 		let key1 = new Date(a.updatedAt);

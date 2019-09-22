@@ -66,7 +66,6 @@ export class ChatService {
 			.snapshotChanges()
 			.pipe(
 				map(actions => {
-					console.log('this is actions');
 					return actions.map(a => {
 						
 						const data: Object = a.payload.doc.data();
@@ -89,8 +88,6 @@ export class ChatService {
 					chatLog = item;
 					const userInfo = item
 						.filter(element=>element.friendId).map(u=>this.afs.doc(`users/${u.friendId}`).valueChanges())
-					console.log('this is switchmap');
-					console.log(item);
 					
 					return userInfo.length ? combineLatest(userInfo) : of([]);
 				}),
@@ -103,7 +100,6 @@ export class ChatService {
 						return {...x,...joinKeys[x.friendId]}
 					})
 					mappedChatLog.sort(function(a:any,b:any){return b.lastUpdated - a.lastUpdated });
-					console.log(mappedChatLog);
 					return mappedChatLog;
 				}),
 			);
@@ -168,7 +164,6 @@ export class ChatService {
 		const { uid } = await this.auth.getUser();
 	
 		const ref = this.afs.collection('chats').doc(chat.id);
-		console.log(msg);
 		if (chat.uid === uid || msg.uid === uid) {
 		  // Allowed to delete
 		  delete msg.user;

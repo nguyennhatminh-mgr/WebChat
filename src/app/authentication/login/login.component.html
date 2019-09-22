@@ -12,34 +12,34 @@
             <h3 class="subtitle" [hidden]="!repass">Sign up</h3>
             <p class="notify" *ngIf="!(check)">*Something is wrong, please check your email or password</p>
             <div class="email" >
-                <ion-input  type="email" placeholder="Enter your email"
+                <input  type="email" placeholder="Enter your email"
                 clear-input="true" name="email"
                 required email #txtEmail="ngModel" ngModel
-                [ngClass]="{'bordertouch': txtEmail?.touched}"></ion-input>
+                [ngClass]="{'bordertouch': txtEmail?.touched}"/>
                 <p class="notify" *ngIf="txtEmail?.touched && txtEmail.errors?.required">*Email is required</p>
                 <p class="notify" *ngIf="txtEmail?.touched && txtEmail.errors?.email">*Email is unvalid</p>
             </div>
             
             <div class="password" >
-                <ion-input type="password" placeholder="Enter your password" clear-input="true" minlength="6"
+                <input type="password" placeholder="Enter your password" clear-input="true" minlength="6"
                 name="password" required #txtPassword="ngModel" ngModel
-                [ngClass]="{'bordertouch': txtPassword?.touched}"></ion-input>
+                [ngClass]="{'bordertouch': txtPassword?.touched}"/>
                 <p class="notify" *ngIf="txtPassword?.touched && txtPassword?.errors?.required">*Password is required</p>
                 <p class="notify" *ngIf="txtPassword?.touched && txtPassword?.errors?.minlength">*Password is at least 6 characters</p>
             </div>
             
             <div class="reenterpassword" [hidden]="!repass" >
-                <ion-input type="password" placeholder="Enter your password again" clear-input="true"
+                <input type="password" placeholder="Enter your password again" clear-input="true"
                 minlength="6" name="repassword" required #txtRepassword="ngModel" ngModel
-                [ngClass]="{'bordertouch': txtRepassword?.touched}"></ion-input>
+                [ngClass]="{'bordertouch': txtRepassword?.touched}"/>
                 <p class="notify" [hidden]="!repass" *ngIf="txtRepassword?.touched && txtRepassword?.errors?.required">*Reenter password is required</p>
                 <p class="notify" [hidden]="!repass" *ngIf="txtRepassword?.touched && txtRepassword?.errors?.notEqual">*Pass word does not match</p>
             </div>
             
             <div class="username" [hidden]="!repass" >
-                <ion-input type="text" placeholder="Enter your username" clear-input="true"
+                <input type="text" placeholder="Enter your username" clear-input="true"
                 name="displayname" required #txtUsername="ngModel" ngModel
-                [ngClass]="{'bordertouch': txtUsername?.touched}"></ion-input>
+                [ngClass]="{'bordertouch': txtUsername?.touched}"/>
                 <p class="notify" [hidden]="!repass" *ngIf="txtUsername?.touched && txtUsername.errors?.required">*Username is required</p>
             </div>
 

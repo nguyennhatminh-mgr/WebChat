@@ -51,7 +51,7 @@
                 </div>   
             </div>
         </div> 
-        <div class="danhsachuser" *ngIf="check">
+        <div class="danhsachuser" [hidden]="!check">
             <div class="moiuser" [ngClass]="{'duocclickchon': indexuser==i}" *ngFor="let item of $chatLogs|async ; index as i" (click)="indexuser=i; getChatCouple(item);">
                 <img src="{{item.photoURL!=null ? item.photoURL : url}}" alt="">
                 <div >

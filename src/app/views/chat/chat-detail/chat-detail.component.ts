@@ -20,6 +20,7 @@ export class ChatDetailComponent implements OnInit {
   scrolltop;
   downloadURL:Observable<any>;
   type="";
+  chatId;
   constructor(
     public cs: ChatService,
     private route: ActivatedRoute,
@@ -32,11 +33,8 @@ export class ChatDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(
       params=> {
-        let chatId = params['id'];
-        if (!chatId){
-          chatId = "L8DXImtGfWNst2znSAZu";
-        }
-        const source = this.cs.get(chatId);
+        this.chatId = params['id'];
+        const source = this.cs.get(this.chatId);
         this.chat$ = this.cs.joinUsers(source);
       }
     )
@@ -64,14 +62,17 @@ export class ChatDetailComponent implements OnInit {
     console.log(e);
   }
   upFile(event){
-    this.upfile.uploadFile(event).pipe(
-      take(1),
+    let type = event.target.files[0].type.split('/')[0];
+    let content = event.target.files[0].name;
+    this.upfile.uploadFile(event,content).pipe(
       tap(x=>{
-        console.log(x);
-        this.downloadURL=x;
-        this.type="image";
+        x.subscribe(a=>{
+          this.downloadURL=a;
+          this.cs.sendMessage(this.chatId,content,type,a);
+        })
       })
     ).subscribe();
+    
   }
 
 }

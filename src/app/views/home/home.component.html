@@ -1,40 +1,68 @@
 <div class="tong">
-  <img class="imgoutside" src="../../../assets/images/backgroundhome.png" alt="">
+  <img class="imgoutside" src="../../../assets/images/backgroundhome3.jpg" alt="">
   <div class="manden"></div>
   <div class="noidung">
-      <!-- <div class="title">
-          <h1>Welcome to Mega Chat</h1>
-      </div> -->
-      
       <div class="login">
+          <!-- <div *ngIf=" auth.user$ | async as user" class="logininside"> -->
           <div *ngIf=" auth.user$ | async as user; else login" class="logininside">
-            <p>
-                <span class="username">welcome {{ user.displayName }} to box chat</span>
-                <!-- <span class="username">welcome {{ user.uid }} to box chat</span> -->
-            </p>
-            <!-- <img [src]="user.photoURL" width="50px"> -->
-            <div class="anhuser"><img [src]="user.photoURL || url"></div>
-            
-            <button class="signOut" (click)="auth.signOut()">Sign Out</button>
-            <hr>
+            <div class="cottrai">
+              <p>
+                  <span class="username">welcome to box chat</span>
+              </p>
+              <p style="color: white;font-family: Verdana, Geneva, Tahoma, sans-serif;">HAVE A GOOD TRIP</p>
+              <div class="chinhsuauser" *ngIf="checkedit">
+                  <p >Username: </p>
+                  <p class="editusername">{{ user.displayName }}</p>
+                  <img src="../../../assets/images/editusername.png" alt="" (click)="getCheckEdit();">
+              </div>
+              <div class="chinhsuauser" *ngIf="!checkedit">
+                  <p >Username: </p>
+                  <input autofocus style="color:black; background-color: white;" class="editusername" [(ngModel)]="valueedit" value="">
+                  <img src="../../../assets/images/edittick.jpg" alt="" (click)="getCheckEdit(); updateUsername();" [ngClass]="{'anneunull': !valueedit}">
+              </div>
+              
+        
+              <hr>
+              <button class="joinYourChat" routerLink="/chats/zJf3RZ50Zie37Go06g5o" [disabled]="!user.photoURL" [ngClass]="{'disablebutton': !user.photoURL}">Join Your Chat 🎪</button>
+              <hr>
+              <button class="button is-info" (click)="cs.create('123','hi')">Create new chat</button>
+              <hr>
+              <button class="signOut" (click)="auth.signOut()">Sign Out</button>
+            </div>
+            <div class="cotphai">
+                <div class="anhuserout">
+                    <div class="anhuserin">
+                        <img [src]="user.photoURL || url" (click)="checkshowimg=false;">
+                        
+                        <div class="denanhuser">
+                          <div class="inputfile-box">
+                              <input type="file" id="file" class="inputfile" (change)="updateURL($event)">
+                              <label for="file" class="updateURL">
+                                 <p> Cập nhật </p>
+                              </label>
+                          </div>
+                          
+                        </div>
+                        <div class="phantram" *ngIf="checkcloadingDone"> </div>
+                    </div> 
+                  </div>
+            </div>
+            <div class="xemanh" *ngIf="!checkshowimg" >
+                <div class="xemanhtrong">
+                    <img class="imguser" [src]="user.photoURL || url" alt="">
+                    <div class="xemanhnenden" (click)="checkshowimg=true;"></div>
+                    <div class="close" (click)="checkshowimg=true;"><img src="../../../assets/images/anhclose.png" alt=""></div>
+                </div>
+                
+              </div>
 
-            <button class="joinYourChat" routerLink="/chats/lEs3RfqsojxvZNPCVaKM">Join Your Chat 🎪</button>
-            <button class="button is-info" (click)="cs.create('123','hi')">Revise your information</button>
-
-            <hr>
-
-            <!-- <h3>My Chats</h3> -->
-
-            <!-- <ul>
-              <li *ngFor="let chat of userChats$ | async">
-                <a routerLink="/chats/{{chat.id}}">{{ chat.id }} - {{ chat.messages.length }} Messages </a>
-              </li>
-            </ul> -->
           </div>
-          <ng-template #login>
-            <h1 style="color: white; margin-bottom: 10px;">You have not account, please click login with Google</h1>
-            <button class="button" (click)="auth.googleSignIn()">Login with Google</button>
-          </ng-template>
+          
+            <ng-template #login class="loading">
+              <!-- <h1 style="color: white; margin-bottom: 10px;">You have not account, please click login with Google</h1>
+              <button class="button" (click)="auth.googleSignIn()">Login with Google</button> -->
+              <div class="divloading"></div>
+            </ng-template>
       </div>
         
   </div>

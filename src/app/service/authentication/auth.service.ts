@@ -13,7 +13,7 @@ export class AuthService {
 
   userData: Observable<firebase.User>;
   user$: Observable<any>;
-  check:boolean;
+  check=true;
   constructor(
     private angularFireAuth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -70,16 +70,21 @@ export class AuthService {
 			displayName: user.displayName,
 			photoURL: user.photoURL
 		}
+		this.router.navigate(['/home']);
 		return userRef.set(data);
 	}
 
 
-	private async updateUserProfile(profile) {
+	public async updateUserProfile(profile) {
 		let user = this.angularFireAuth.auth.currentUser;
-		user.updateProfile({
+		const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+		let updateData = {
 			displayName: profile.displayName,
 			photoURL: profile.photoURL
-		}).then(() => console.log('success'), () => console.log('error'));
+		};
+		user.updateProfile(updateData).then(() => {
+			userRef.update(updateData)
+		}, () => console.log('error'));
 	}
 
   async signOut() {
@@ -129,14 +134,15 @@ export class AuthService {
           photoURL: user.photoURL
         }
         userRef.set(data);
-        console.log('Successfully signed in!');
+		console.log('Successfully signed in!');
         return this.router.navigate(['/home']);
       })
       .catch(err => {
         console.log('Something is wrong:', err.message);
-        this.check = false;
+		this.check = false;
+		return false;
       });
-    return this.check;
+	return this.check;
   }
 
 	/* Sign out */

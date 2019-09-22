@@ -207,7 +207,7 @@ input[type="file"]::-webkit-file-upload-button{
     justify-content: flex-start;
     align-items: center;
     margin-left: 5px;
-    width: 93%;
+    width: 85%;
 }
 .mymessagecontent{
     display: flex;
@@ -253,7 +253,7 @@ input[type="file"]::-webkit-file-upload-button{
     padding-top: 10px;
 }
 .tong .imghienthi{
-    width: 30%;
+    width: 200px;
     border-radius: 3%;
 }
 //Custom scroll bar
@@ -332,4 +332,8 @@ input[type="file"]::-webkit-file-upload-button{
     margin: 0;
     opacity: 0;
     font-size: 100px; 
+ }
+ a.namefiletagA{
+    text-decoration: none;
+    color: white;
  }

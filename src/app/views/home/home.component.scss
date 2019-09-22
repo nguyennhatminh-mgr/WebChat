@@ -5,21 +5,22 @@
 }
 .tong img.imgoutside{
     width: 100%;
-    // height: 100%;
+    height: 100%;
     position: absolute;
-    opacity: 0.6;
+    opacity: 1;
 }
 .tong .manden{
     width: 100%;
     height: 100%;
-    background-color: #4041457a;
+    background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
+    opacity: 0;
 }
 .tong .noidung{
     width: 100%;
     height: 100%;
     margin: auto;
-    text-align: center;
+    // text-align: center;
     position: absolute;
     display: flex;
     align-items: center;
@@ -31,35 +32,217 @@
 }
 .tong .login{
     width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 .tong .login .logininside{
     width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
 }
-.logininside .anhuser{
+.tong .login .logininside .cottrai{
+    width: 50%;
+    padding-left: 10%;
+}
+.tong .login .logininside .cotphai{
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+.logininside .anhuserout{
     width: 100%;
-    // display: flex;
-    // justify-content: center;
+    display: flex;
+    justify-content: flex-start;
     margin-bottom: 10px;
+    
 }
-.logininside .anhuser img{
+.logininside .anhuserin{
+    width: 200px;
+    height: 200px;
+    position: relative;
+    display: inherit;
+    overflow: hidden;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.4s;
+}
+.logininside .anhuserin img{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    // position: absolute;
+}
+.logininside .anhuserin:hover .denanhuser{
+    opacity: 1;
+    visibility: visible;
+}
+.logininside .anhuserin .denanhuser{
+    margin-top:50%;
+    width: 200px;
+    height: 100px;
+    // border-bottom-left-radius: 100%;
+    // border-bottom-right-radius: 100%;
+    position: absolute;
+    background-color: rgba(128, 128, 128, 0.808);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.logininside .anhuserin .phantram{
+    position: absolute;
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    border-top: 5px solid #1aaa1a;
+    border-bottom: 5px solid #1aaa1a;
+    border-right: 5px solid #1aaa1a;
+    animation: aniwaiting 1s infinite;
+    top: 40%;
+    left: 40%;
+}
+@keyframes aniwaiting{
+    0%{transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
 }
 .login .username{
     text-transform: uppercase;
     font-weight: bold;
     color: white;
-    font-size: 25px;
+    font-size: 34px;
+    font-family: Arial;
+}
+.login .chinhsuauser{
+    color: white;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.login .chinhsuauser p{
+    margin: 0px;
+}
+.login .chinhsuauser .editusername{
+    border: 2px solid white;
+    padding: 10px 20px;
+    margin-right: 10px;
+    margin-left: 20px;
+    background-color: black;
+}
+.login .chinhsuauser img{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+.login .chinhsuauser img:hover{
+    width: 33px;
+    height: 33px;
 }
 
 .login button{
     padding: 10px 20px;
-    background-color: #1aaa1a;
+    background-color: black;
     color: white;
     font-size: 18px;
-    border-radius: 5px;
+    border:2px solid white;
+    transition: 0.4s;
+}
+.login button:hover{
+    color: #1aaa1a;
+    padding: 10px 30px;
 }
 .login .joinYourChat{
     margin-right: 10px;
+}
+.login .loading{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login .loading .divloading{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border-top: 2px solid #1aaa1a;
+    border-right: 2px solid #1aaa1a;
+    border-bottom: 2px solid #1aaa1a;
+}
+/*Them*/
+.inputfile-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    // margin-left: 2%;
+    text-align: center;
+}
+  
+.inputfile {
+    display: none;
+}
+  
+.updateURL p{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding-top: 20%;
+    cursor: pointer;
+}
+.xemanh{
+    position: absolute;
+    // background-color: black;
+    width: 100%;
+    height: 100%;
+    
+    cursor: pointer;
+}
+.xemanh .xemanhtrong{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.xemanh .xemanhtrong .xemanhnenden{
+    width: 100%;
+    height: 100%;
+    // position: absolute;
+    background-color: rgba(0, 0, 0, 0.76);
+}
+.xemanh img.imguser{
+    max-height: 90%;
+    max-width: 90%;
+    position: absolute;
+}
+.xemanh .xemanhtrong .close{
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    cursor: pointer;
+}
+.xemanh .xemanhtrong .close img{
+    width: 20px;
+    height: 20px;
+}
+
+.disablebutton{
+    background-color: #1b311b !important;
+    color: white !important;
+    opacity: 0.5 !important;
+}
+.anneunull{
+    opacity: 0 !important;
+    visibility: hidden !important;
 }

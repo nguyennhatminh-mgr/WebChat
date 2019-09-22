@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../authentication/auth.service';
 import { Router } from '@angular/router';
+
 import { map, switchMap, tap, take, flatMap, mergeMap, concatAll, toArray, combineAll, concat, zip, exhaustMap, reduce } from 'rxjs/operators';
 import { firestore } from 'firebase';
 import { Observable, combineLatest, of, from, forkJoin } from 'rxjs';
@@ -32,6 +33,7 @@ export class ChatService {
 			);
 	}
 
+
 	joinUsers(chat$: Observable<any>) {
 		let chat;
 		const joinKeys = {};
@@ -51,6 +53,7 @@ export class ChatService {
 					return { ...v, user: joinKeys[v.uid] };
 				});
 				return chat;
+
 			})
 		)
 	}
@@ -63,7 +66,9 @@ export class ChatService {
 			.snapshotChanges()
 			.pipe(
 				map(actions => {
+					console.log('this is actions');
 					return actions.map(a => {
+						
 						const data: Object = a.payload.doc.data();
 						const id = a.payload.doc.id;
 						let isChatRoom = data['isChatRoom']?true:false;
@@ -74,7 +79,7 @@ export class ChatService {
 						let info = {
 							lastUpdated: data['lastUpdated'],
 							lastMessage: data['lastMessage'],
-							friendId,
+							friendId:friendId?friendId:null,
 							isChatRoom,
 						}
 						return { id, ...info };
@@ -83,8 +88,10 @@ export class ChatService {
 				switchMap(item=>{
 					chatLog = item;
 					const userInfo = item
-						.filter(element=>element.friendId)
-						.map(u=>this.afs.doc(`users/${u.friendId}`).valueChanges())
+						.filter(element=>element.friendId).map(u=>this.afs.doc(`users/${u.friendId}`).valueChanges())
+					console.log('this is switchmap');
+					console.log(item);
+					
 					return userInfo.length ? combineLatest(userInfo) : of([]);
 				}),
 				map(arr => {
@@ -96,6 +103,7 @@ export class ChatService {
 						return {...x,...joinKeys[x.friendId]}
 					})
 					mappedChatLog.sort(function(a:any,b:any){return b.lastUpdated - a.lastUpdated });
+					console.log(mappedChatLog);
 					return mappedChatLog;
 				}),
 			);
@@ -111,7 +119,6 @@ export class ChatService {
 							return actions.map(a => {
 								const data: Object = a.payload.doc.data();
 								const id = a.payload.doc.id;
-								// this.router.navigate(['chats',id]);
 								return { id, ...data };
 							});
 						})
@@ -132,7 +139,7 @@ export class ChatService {
 			count: 0,
 			messages: [],
 			isChatRoom,
-			roomName
+			roomName:roomName? roomName:""
 		};
 		const docRef = await this.afs.collection('chats').add(data);
 		this.router.navigate(['chats', docRef.id]);

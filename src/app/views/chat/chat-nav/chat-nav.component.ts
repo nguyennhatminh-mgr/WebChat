@@ -105,15 +105,15 @@ export class ChatNavComponent implements OnInit {
   }
 
 
-  // getAllChatLog() {
-  //   this.cs.getUserChatLog().pipe(
-  //     tap(chatArray=>{
-  //       //do everything here
-  //       console.log(chatArray);
-  //     })
-  //   ).subscribe();
-  // }
-  elementTrack(i,item){
-    return item.id;
+  getAllChatLog() {
+    this.cs.getUserChatLog().pipe(
+      tap(chatArray=>{
+        //do everything here
+        console.log(chatArray);
+      })
+    ).subscribe();
   }
+  // elementTrack(i,item){
+  //   return item.id;
+  // }
 }

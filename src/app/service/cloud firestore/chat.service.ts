@@ -65,8 +65,8 @@ export class ChatService {
 			.collection('chats', ref => ref.where(`users.${uid}`, '==', true))
 			.snapshotChanges()
 			.pipe(
-				map(actions => {
-					return actions.map(a => {
+				switchMap(actions => {
+					chatLog =  actions.map(a => {
 						
 						const data: Object = a.payload.doc.data();
 						const id = a.payload.doc.id;
@@ -83,11 +83,9 @@ export class ChatService {
 						}
 						return { id, ...info };
 					});
-				}),
-				switchMap(item=>{
-					chatLog = item;
-					const userInfo = item
-						.filter(element=>element.friendId).map(u=>this.afs.doc(`users/${u.friendId}`).valueChanges())
+					console.log(chatLog);
+					const userInfo = chatLog.filter(element=>element.friendId)
+									.map(u=>this.afs.doc(`users/${u.friendId}`).valueChanges());
 					
 					return userInfo.length ? combineLatest(userInfo) : of([]);
 				}),

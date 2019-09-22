@@ -47,7 +47,7 @@
 										<!-- (click)="cs.deleteMessage(chat, msg)" -->
 									<!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid"
 									(click)="cs.deleteMessage(chat, msg)" >Delete</button> -->
-									<img src="../../../../assets/images/btndelete.png" alt="">
+									<img src="../../../../assets/images/btndelete.png" alt="" (click)="cs.deleteMessage(chat,msg)">
 								</div>
 								<div class="mymessagecontent">
 									

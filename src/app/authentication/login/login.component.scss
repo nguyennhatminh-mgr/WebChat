@@ -133,3 +133,14 @@ p.notify{
 .disable{
     background-color: #2d5f2d8a !important;
 }
+.divloginwithgoogle{
+    color: #1aaa1a;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.divloginwithgoogle p{
+    margin-bottom: 0px;
+}
+.divloginwithgoogle p:hover{
+    color: blue;
+}

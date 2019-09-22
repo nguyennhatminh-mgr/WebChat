@@ -10,7 +10,7 @@
         <form class="login-form" #formSignin="ngForm">
             <h3 class="subtitle" [hidden]="repass">Log in</h3>
             <h3 class="subtitle" [hidden]="!repass">Sign up</h3>
-            <p class="notify" *ngIf="!check">*Something is wrong, please check your email or password</p>
+            <p class="notify" *ngIf="!(check)">*Something is wrong, please check your email or password</p>
             <div class="email" >
                 <ion-input  type="email" placeholder="Enter your email"
                 clear-input="true" name="email"
@@ -47,7 +47,7 @@
                 <div class="btnlogin">
                     <button (click)="loginClick(formSignin)" (keydown.enter)="loginClick(formSignin)" [disabled]="txtEmail?.errors?.invalid || txtPassword?.errors?.invalid"
                     [ngClass]="{'disable': txtEmail?.errors?.invalid || txtPassword?.errors?.invalid}" >
-                            Log in  
+                            Log in 
                     </button>
                 </div>
                 <div class="textlogin">
@@ -56,6 +56,9 @@
                         <span class="textclick" (click)="signupClick()">click to sign up</span>
                     </p>
                 </div>
+            </div>
+            <div class="divloginwithgoogle" *ngIf="appear">
+                <p (click)="loginwithGoogle()">Login with Google</p>
             </div>
             <div class="divbtnsignup" *ngIf="repass">
                 <div class="textsignup">

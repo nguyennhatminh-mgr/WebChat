@@ -58,11 +58,8 @@ export class ChatNavComponent implements OnInit {
         // console.log(usersDisplay.uid); 
         // console.log(chat.length);
         if (!chat || !chat.length || chat.length === 0) {
-          console.log('noncreate');
           this.cs.create(usersDisplay.uid, false);
         } else {
-          console.log('created');
-          console.log(chat[0].id);
           this.router.navigate(['chats',chat[0].id]);          
         }
       })

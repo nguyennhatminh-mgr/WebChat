@@ -68,7 +68,7 @@ export class AuthService {
 			uid: user.uid,
 			email: user.email,
 			displayName: user.displayName,
-			photoURL: user.photoURL
+			photoURL: user.photoURL?user.photoURL : null
 		}
 		this.router.navigate(['/home']);
 		return userRef.set(data);
@@ -79,8 +79,8 @@ export class AuthService {
 		let user = this.angularFireAuth.auth.currentUser;
 		const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
 		let updateData = {
-			displayName: profile.displayName,
-			photoURL: profile.photoURL
+			displayName: profile.displayName?profile.displayName:null,
+			photoURL: profile.photoURL?profile.photoURL:null,
 		};
 		user.updateProfile(updateData).then(() => {
 			userRef.update(updateData)

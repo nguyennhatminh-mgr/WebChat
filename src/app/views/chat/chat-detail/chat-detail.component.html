@@ -33,27 +33,19 @@
 								</div>
 							<!-- </div> --> 
 							<div class="messagecontent">
-								<div *ngIf="msg.type==='image'">
-										<img class="imghienthi" [src]="msg.fileURL" alt="">
-								</div>
-								<p *ngIf="!(msg.type==='image') && !(msg.type==='message')"><a [href]="msg.fileURL" target="blank" class="namefiletagA">{{msg.content}}</a></p>
-								<p *ngIf="msg.type==='message'">{{ msg.content }} </p>
+								<p>{{ msg.content }} </p>
 							</div>
 						</div>
 						<!-- <div *ngIf="chat.uid === user.uid || msg.uid === user.uid" class="displayflex"> -->
 						<div *ngIf=" msg.uid === user.uid" class="displayflex" style="width: 100%; justify-content: flex-end;">
 							<div class="displayflex" style="width: 50%; justify-content: flex-end;">
-								<div class="btndelete" >
-										<!-- (click)="cs.deleteMessage(chat, msg)" -->
+								<div class="btndelete" (click)="cs.deleteMessage(chat, msg)">
 									<!-- <button *ngIf="chat.uid === user.uid || msg.uid === user.uid"
 									(click)="cs.deleteMessage(chat, msg)" >Delete</button> -->
-									<img src="../../../../assets/images/btndelete.png" alt="" (click)="cs.deleteMessage(chat,msg)">
+									<img src="../../../../assets/images/btndelete.png" alt="">
 								</div>
 								<div class="mymessagecontent">
-									
-									<img *ngIf="msg.type==='image'" class="imghienthi" [src]="msg.fileURL" alt="">
-									<p *ngIf="!(msg.type==='image') && !(msg.type==='message')"><a [href]="msg.fileURL" target="blank" class="namefiletagA">{{msg.content}}</a></p>
-									<p *ngIf="msg.type==='message'">{{ msg.content }} </p>
+									<p>{{ msg.content }} </p>
 								</div>
 							</div>
 							<div class="mydisplaymessage" >
@@ -68,9 +60,10 @@
 
 						</div>
 						
-						
 					</div>
-					
+					<div  class="displayright" style="width:100%;">
+						<img class="imghienthi" [src]="downloadURL" alt="">
+					</div>
 				</div>
 				
 			</div>

@@ -25,7 +25,7 @@
               <hr>
               <button class="joinYourChat" routerLink="/chats/zJf3RZ50Zie37Go06g5o" [disabled]="!user.photoURL" [ngClass]="{'disablebutton': !user.photoURL}">Join Your Chat 🎪</button>
               <hr>
-              <button class="button is-info" (click)="cs.create('123','hi')">Create new chat</button>
+              <button class="button is-info" (click)="cs.create('123',false)">Create new chat</button>
               <hr>
               <button class="signOut" (click)="auth.signOut()">Sign Out</button>
             </div>

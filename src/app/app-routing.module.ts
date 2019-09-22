@@ -11,7 +11,7 @@ const redirectUnauthorizedToLogin = redirectUnauthorizedTo(['login']);
 const redirectLoggedInToChat = redirectLoggedInTo(['chat']);
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', redirectTo: 'login',pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent},
   { path: 'chats/:id', component: ChatNavComponent, canActivate: [AuthGuard] }

@@ -93,7 +93,6 @@ export class ChatService {
 					return userInfo.length ? combineLatest(userInfo) : of([]);
 				}),
 				map(arr => {
-					console.log(arr);
 					arr.forEach((v: any) => {
 						if (v) (joinKeys[v.uid] = {
 						displayName: v.displayName,
@@ -104,7 +103,6 @@ export class ChatService {
 						return { ...x, ...joinKeys[x.friendId] }
 					})
 					mappedChatLog.sort(function (a: any, b: any) { return b.lastUpdated - a.lastUpdated });
-					console.log(mappedChatLog);
 					return mappedChatLog;
 				}),
 			);

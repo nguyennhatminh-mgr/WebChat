@@ -23,7 +23,7 @@ export class ChatNavComponent implements OnInit {
   usersDisplay=[];
   groupSearch=[];
 
-  url = "../../../../assets/images/backgroundLogin.jpg";
+  url = "../../../../assets/images/groupAvatar.png";
   indexuser = -1;
   usernamesearch = '';
   check=true;

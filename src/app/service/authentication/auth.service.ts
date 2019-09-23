@@ -93,8 +93,9 @@ export class AuthService {
   }
 
 	/* Sign up */
-	SignUp(email: string, password: string, username?: string) {
-		this.angularFireAuth
+	async SignUp(email: string, password: string, username?: string) {
+		let errorCode = "";
+		await this.angularFireAuth
 			.auth
 			.createUserWithEmailAndPassword(email, password)
 			.then(async (res: any) => {
@@ -108,19 +109,21 @@ export class AuthService {
 					photoURL: user.photoURL
 				};
 				userRef.set(data);
-				console.log('Successfully signed up!', res);
-				return this.router.navigate(['/home']);
+				// this.router.navigate(['/home']);
+				errorCode = "no err";
 			})
 			.catch(error => {
-				console.log('Something is wrong:', error.message);
+				errorCode = error.code;
 			});
+		return errorCode;
 	}
 
 
   /* Sign in */
-  SignIn(email: string, password: string):boolean {
-    // var check=true;
-    this.angularFireAuth
+  async SignIn(email: string, password: string):Promise<string> {
+	// var check=true;
+	let error;
+    await this.angularFireAuth
       .auth
       .signInWithEmailAndPassword(email, password)
       .then((res:any) => {
@@ -135,14 +138,13 @@ export class AuthService {
         }
         userRef.set(data);
 		console.log('Successfully signed in!');
-        return this.router.navigate(['/home']);
+		this.router.navigate(['/home']);
+		error ="no err";
       })
       .catch(err => {
-        console.log('Something is wrong:', err.message);
-		this.check = false;
-		return false;
+		error = err.code;
       });
-	return this.check;
+	return error;
   }
 
 	/* Sign out */

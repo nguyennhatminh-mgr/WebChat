@@ -16,8 +16,8 @@
                 clear-input="true" name="email"
                 required email #txtEmail="ngModel" ngModel
                 [ngClass]="{'bordertouch': txtEmail?.touched}"/>
-                <p class="notify" *ngIf="txtEmail?.touched && txtEmail.errors?.required">*Email is required</p>
-                <p class="notify" *ngIf="txtEmail?.touched && txtEmail.errors?.email">*Email is unvalid</p>
+                <p class="notify" *ngIf="txtEmail?.touched && txtEmail?.errors?.required">*Email is required</p>
+                <p class="notify" *ngIf="txtEmail?.touched && txtEmail?.errors?.email">*Email is unvalid</p>
             </div>
             
             <div class="password" >
@@ -40,7 +40,7 @@
                 <input type="text" placeholder="Enter your username" clear-input="true"
                 name="displayname" required #txtUsername="ngModel" ngModel
                 [ngClass]="{'bordertouch': txtUsername?.touched}"/>
-                <p class="notify" [hidden]="!repass" *ngIf="txtUsername?.touched && txtUsername.errors?.required">*Username is required</p>
+                <p class="notify" [hidden]="!repass" *ngIf="txtUsername?.touched && txtUsername?.errors?.required">*Username is required</p>
             </div>
 
             <div class="divbtnlogin" *ngIf="appear"> 

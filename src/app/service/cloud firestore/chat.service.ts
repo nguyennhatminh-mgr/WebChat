@@ -73,16 +73,18 @@ export class ChatService {
 						let isChatRoom = data['isChatRoom'] ? true : false;
 						// let roomName=data['roomName'];
 						let friendId;
-						if (!isChatRoom) {
-							friendId = Object.keys(data['users']).find(x => x !== uid);
-						}
 						let info = {
 							lastUpdated: data['lastUpdated'],
 							lastMessage: data['lastMessage'],
-							friendId: friendId ? friendId : null,
 							isChatRoom,
 							roomName: data['roomName']
 						}
+						if (!isChatRoom) {
+							info['friendId'] = Object.keys(data['users']).find(x => x !== uid);
+						} else{
+							info['chatMember'] = Object.keys(data['users']);
+						}
+						
 						return { id, ...info };
 					});
 					const userInfo = chatLog.filter(element => element.friendId)
@@ -91,14 +93,18 @@ export class ChatService {
 					return userInfo.length ? combineLatest(userInfo) : of([]);
 				}),
 				map(arr => {
-					arr.forEach((v: any) => (joinKeys[v.uid] = {
+					console.log(arr);
+					arr.forEach((v: any) => {
+						if (v) (joinKeys[v.uid] = {
 						displayName: v.displayName,
 						photoURL: v.photoURL
-					}))
+						})
+					})
 					let mappedChatLog = chatLog.map(x => {
 						return { ...x, ...joinKeys[x.friendId] }
 					})
 					mappedChatLog.sort(function (a: any, b: any) { return b.lastUpdated - a.lastUpdated });
+					console.log(mappedChatLog);
 					return mappedChatLog;
 				}),
 			);

@@ -71,6 +71,7 @@ export class ChatService {
 						const data: Object = a.payload.doc.data();
 						const id = a.payload.doc.id;
 						let isChatRoom = data['isChatRoom']?true:false;
+						// let roomName=data['roomName'];
 						let friendId;
 						if (!isChatRoom) {
 							friendId = Object.keys(data['users']).find(x => x !== uid);
@@ -80,6 +81,7 @@ export class ChatService {
 							lastMessage: data['lastMessage'],
 							friendId:friendId?friendId:null,
 							isChatRoom,
+							roomName: data['roomName']
 						}
 						return { id, ...info };
 					});
@@ -126,7 +128,7 @@ export class ChatService {
 		const { uid } = await this.auth.getUser();
 		let a = {};
 		a[uid] = true;
-		a[friendId] = true;
+		if(friendId) a[friendId] = true;
 		const data = {
 			users: a,
 			user: uid,

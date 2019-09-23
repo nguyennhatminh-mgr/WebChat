@@ -66,11 +66,11 @@ export class ChatService {
 			.snapshotChanges()
 			.pipe(
 				switchMap(actions => {
-					chatLog =  actions.map(a => {
-						
+					chatLog = actions.map(a => {
+
 						const data: Object = a.payload.doc.data();
 						const id = a.payload.doc.id;
-						let isChatRoom = data['isChatRoom']?true:false;
+						let isChatRoom = data['isChatRoom'] ? true : false;
 						// let roomName=data['roomName'];
 						let friendId;
 						if (!isChatRoom) {
@@ -79,27 +79,26 @@ export class ChatService {
 						let info = {
 							lastUpdated: data['lastUpdated'],
 							lastMessage: data['lastMessage'],
-							friendId:friendId?friendId:null,
+							friendId: friendId ? friendId : null,
 							isChatRoom,
 							roomName: data['roomName']
 						}
 						return { id, ...info };
 					});
-					console.log(chatLog);
-					const userInfo = chatLog.filter(element=>element.friendId)
-									.map(u=>this.afs.doc(`users/${u.friendId}`).valueChanges());
-					
+					const userInfo = chatLog.filter(element => element.friendId)
+						.map(u => this.afs.doc(`users/${u.friendId}`).valueChanges());
+
 					return userInfo.length ? combineLatest(userInfo) : of([]);
 				}),
 				map(arr => {
-					arr.forEach((v:any)=> (joinKeys[v.uid] = {
-						displayName:v.displayName,
-						photoURL:v.photoURL
+					arr.forEach((v: any) => (joinKeys[v.uid] = {
+						displayName: v.displayName,
+						photoURL: v.photoURL
 					}))
-					let mappedChatLog = chatLog.map(x=>{
-						return {...x,...joinKeys[x.friendId]}
+					let mappedChatLog = chatLog.map(x => {
+						return { ...x, ...joinKeys[x.friendId] }
 					})
-					mappedChatLog.sort(function(a:any,b:any){return b.lastUpdated - a.lastUpdated });
+					mappedChatLog.sort(function (a: any, b: any) { return b.lastUpdated - a.lastUpdated });
 					return mappedChatLog;
 				}),
 			);
@@ -122,11 +121,11 @@ export class ChatService {
 			})
 		);
 	}
-	async create(friendId?: string, isChatRoom?:boolean, roomName?:string) {
+	async create(friendId?: string, isChatRoom?: boolean, roomName?: string) {
 		const { uid } = await this.auth.getUser();
 		let a = {};
 		a[uid] = true;
-		if(friendId) a[friendId] = true;
+		if (friendId) a[friendId] = true;
 		const data = {
 			users: a,
 			user: uid,
@@ -135,7 +134,7 @@ export class ChatService {
 			count: 0,
 			messages: [],
 			isChatRoom,
-			roomName:roomName? roomName:""
+			roomName: roomName ? roomName : ""
 		};
 		const docRef = await this.afs.collection('chats').add(data);
 		this.router.navigate(['chats', docRef.id]);
@@ -162,15 +161,21 @@ export class ChatService {
 
 	async deleteMessage(chat, msg) {
 		const { uid } = await this.auth.getUser();
-	
+
 		const ref = this.afs.collection('chats').doc(chat.id);
 		if (chat.uid === uid || msg.uid === uid) {
-		  // Allowed to delete
-		  delete msg.user;
-		  return ref.update({
-			messages: firestore.FieldValue.arrayRemove(msg)
-		  });
+			// Allowed to delete
+			delete msg.user;
+			return ref.update({
+				messages: firestore.FieldValue.arrayRemove(msg)
+			});
 		}
-	  }
+	}
 
+	addUserToGroup(chatId:string,userId:string){
+		const newUser = {};
+		newUser[`users.${userId}`]=true;
+		console.log(newUser);
+		return this.afs.collection('chats').doc(chatId).update(newUser);
+	}
 }

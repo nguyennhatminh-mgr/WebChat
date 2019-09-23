@@ -38,9 +38,7 @@ export class ChatNavComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.getAllChatLog();
     this.$chatLogs = this.cs.getUserChatLog();
-
   }
  
 
@@ -80,28 +78,6 @@ export class ChatNavComponent implements OnInit {
     ).subscribe();
   }
 
-  // getAllChatLog() {
-  //   this.cs.getUserChatLog().pipe(
-  //     tap((a: any) => {
-  //       a.sort((a: any, b: any) => {
-  //         let keyA = new Date(a.lastUpdated);
-  //         let keyB = new Date(b.lastUpdated);
-  //         if (keyA < keyB) return 1;
-  //         if (keyA > keyB) return -1;
-  //         return 0;
-  //       })
-  //       console.log('a');
-  //       a.forEach(element => {
-  //         console.log("crazy" + element)
-  //       });
-  //       console.log(a);
-  //       this.listuser=a;
-  //       // this.usersDisplay=this.listuser;
-  //       this.check=true;
-  //     })
-  //   ).subscribe()
-  // }
-
   checkSearch($event){
     // console.log($event.target.value)
     if(!$event.target.value){
@@ -118,19 +94,13 @@ export class ChatNavComponent implements OnInit {
     this.router.navigate(['/chats/'+user.id]);
   }
 
-
-  getAllChatLog() {
-    this.cs.getUserChatLog().pipe(
-      tap(chatArray=>{
-        //do everything here
-        console.log(chatArray);
-      })
-    ).subscribe();
-  }
   elementTrack(i,item){
     return item.id;
   }
   createMMTChatroom(){
     this.router.navigate(['chats/INeV2z7vAVnI4219MjJV']);
+  }
+  addUserToGroup(){
+    // this.cs.addUserToGroup('groupId','userId');
   }
 }

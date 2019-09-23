@@ -43,7 +43,11 @@ export class AuthService {
 		);
 	}
 	searchUsersByUsername(username: string) {
-    return this.afs.collection('users', ref=> ref.where('displayName','==',username)).valueChanges()
+	let lowerUsername = username.split(' ')[0];
+	let upperUsername = lowerUsername+'z';
+	return this.afs.collection('users', ref=> 
+		 ref.where('displayName','>=',lowerUsername)
+			.where('displayName','<=',upperUsername)).valueChanges()
       .pipe(
 			take(1),
 			map(x=>{

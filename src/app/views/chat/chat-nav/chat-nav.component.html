@@ -28,40 +28,72 @@
     </ion-row>
 </ion-grid> -->
 <!-- </ion-content>  -->
-<div class="divoutside">
-    <div class="cottrai">
-        <div class="title">
-            <img src="../../../../assets/images/icon.png" alt="">
-            <h3 style="font-weight: bold;">Chat</h3>
+<div class="tong">
+    <div class="hopthoaichatroom" *ngIf="!checkshowchatroom">
+        <div class="hopthoai">
+            <div class="title">Create new chat room</div>
+            <div class="tenphongchat">
+                <input type="text" placeholder="Name of chat room" [(ngModel)]="nameChatroom" autofocus>
+            </div>
+            <div class="btntaophong">
+                <button (click)="cs.create('',true,nameChatroom); checkshowchatroom=true;" [disabled]="nameChatroom===''" [ngClass]="{'disablebtn': nameChatroom===''}">Create</button>
+                <button (click)="checkshowchatroom=true;" style="margin-left: 10px;">Cancel</button>
+            </div>
+            <div class="invitemember">
+                <input type="search" [(ngModel)]="nameGroupsearch" name="search" (keydown.enter)="onGroupSearch()">
+                <div class="danhsachgroupuser">
+                    <div class="moigroupuser" *ngFor="let item of groupSearch" style="display:flex;">
+                        <img style="width:30px; height:30px;" src="{{item.photoURL!=null ? item.photoURL : url}}" alt="">
+                        <div >
+                            <p class="tenuser" *ngIf="item.displayName">{{item.displayName}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div> 
         </div>
-        <form class="search">
-            <div class="insearch">
-                <input type="search" placeholder="Enter username to search" [(ngModel)]="usernamesearch" name="search" (keydown.enter)="onSearch()" (keyup)="checkSearch($event)">
-                <!-- <button (click)="onSearch()" (keydown.enter)="onSearch()" >search</button> -->
-                <img [ngClass]="{'hienlen': usernamesearch!=''}"  class="imgclearinput" src="../../../../assets/images/clearinput.png" alt="" (click)="usernamesearch='';check=true;">
-                <img  class="imgsearch" src="../../../../assets/images/iconsearch.png" alt="" (click)="onSearch()">
-            </div>
-        </form>
-        <div class="danhsachuser" *ngIf="!check">
-            <div class="moiuser" [ngClass]="{'duocclickchon': indexuser==i}" *ngFor="let item of usersearched; index as i" (click)="indexuser=i;searchUserClick(item);">
-                <img src="{{item.photoURL!=null ? item.photoURL : url}}" alt="">
-                <div >
-                    <p class="tenuser" *ngIf="item.displayName">{{item.displayName}}</p>
-                    <!-- <p class="messageofuser">message</p> -->
-                </div>   
-            </div>
-        </div> 
-        <div class="danhsachuser" [hidden]="!check">
-            <div class="moiuser" [ngClass]="{'duocclickchon': indexuser==i}" *ngFor="let item of $chatLogs|async ; index as i" (click)="indexuser=i; getChatCouple(item);">
-                <img src="{{item.photoURL!=null ? item.photoURL : url}}" alt="">
-                <div >
-                    <p class="tenuser">{{item.displayName}}</p>
-                    <p class="messageofuser">{{item.lastMessage}}</p>
-                </div>   
-            </div>
-        </div> 
+        
+
     </div>
-    <div class="cotphai">
-        <app-chat-detail></app-chat-detail>
+
+    <div class="divoutside">
+        <div class="cottrai">
+            <div class="title">
+                <img src="../../../../assets/images/icon.png" alt="">
+                <h3 style="font-weight: bold;">Chat</h3>
+                <button (click)="checkshowchatroom=false;">Create chat room</button>
+            </div>
+            <form class="search">
+                <div class="insearch">
+                    <input type="search" placeholder="Enter username to search" [(ngModel)]="usernamesearch" name="search" (keydown.enter)="onSearch()" (keyup)="checkSearch($event)">
+                    <!-- <button (click)="onSearch()" (keydown.enter)="onSearch()" >search</button> -->
+                    <img [ngClass]="{'hienlen': usernamesearch!=''}"  class="imgclearinput" src="../../../../assets/images/clearinput.png" alt="" (click)="usernamesearch='';check=true;">
+                    <img  class="imgsearch" src="../../../../assets/images/iconsearch.png" alt="" (click)="onSearch()">
+                </div>
+            </form>
+            <div class="chatroomMMT">
+                <button (click)="createMMTChatroom();">Join MMT chat room</button> 
+            </div>
+            <div class="danhsachuser" *ngIf="!check">
+                <div class="moiuser" [ngClass]="{'duocclickchon': indexuser==i}" *ngFor="let item of usersearched; index as i" (click)="indexuser=i;searchUserClick(item);">
+                    <img src="{{item.photoURL!=null ? item.photoURL : url}}" alt="">
+                    <div >
+                        <p class="tenuser" *ngIf="item.displayName">{{item.displayName}}</p>
+                        <!-- <p class="messageofuser">message</p> -->
+                    </div>   
+                </div>
+            </div> 
+            <div class="danhsachuser" [hidden]="!check">
+                <div class="moiuser" [ngClass]="{'duocclickchon': indexuser==i}" *ngFor="let item of $chatLogs|async ; index as i" (click)="indexuser=i; getChatCouple(item);">
+                    <img src="{{item.photoURL!=null ? item.photoURL : url}}" alt="">
+                    <div >
+                        <p class="tenuser">{{item.displayName || item.roomName}}</p>
+                        <p class="messageofuser">{{item.lastMessage}} - {{item.isChatRoom?"Group chat":"Couple chat"}}</p>
+                    </div>   
+                </div>
+            </div> 
+        </div>
+        <div class="cotphai">
+            <app-chat-detail></app-chat-detail>
+        </div>
     </div>
 </div>

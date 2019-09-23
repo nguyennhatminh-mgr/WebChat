@@ -23,7 +23,7 @@
               
         
               <hr>
-              <button class="joinYourChat" routerLink="/chats/zJf3RZ50Zie37Go06g5o" [disabled]="!user.photoURL" [ngClass]="{'disablebutton': !user.photoURL}">Join Your Chat 🎪</button>
+              <button class="joinYourChat" routerLink="/chats/kRPiCCd8zaFBTQxvW1n1" [disabled]="!user.photoURL" [ngClass]="{'disablebutton': !user.photoURL}">Join Your Chat 🎪</button>
               <hr>
               <button class="button is-info" (click)="cs.create('123',false)">Create new chat</button>
               <hr>
@@ -47,7 +47,7 @@
                     </div> 
                   </div>
             </div>
-            <div class="xemanh" *ngIf="!checkshowimg" >
+            <div class="xemanh" *ngIf="!checkshowimg && user.photoURL" >
                 <div class="xemanhtrong">
                     <img class="imguser" [src]="user.photoURL || url" alt="">
                     <div class="xemanhnenden" (click)="checkshowimg=true;"></div>

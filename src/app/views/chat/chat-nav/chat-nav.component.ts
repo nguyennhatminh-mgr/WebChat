@@ -15,9 +15,13 @@ import { Log } from 'src/app/models/log.model';
   styleUrls: ['./chat-nav.component.scss']
 })
 export class ChatNavComponent implements OnInit {
+  checkshowchatroom=true;
+  nameChatroom="";
+  nameGroupsearch="";
   usersearched = [];
   listuser=[];
   usersDisplay=[];
+  groupSearch=[];
 
   url = "../../../../assets/images/backgroundLogin.jpg";
   indexuser = -1;
@@ -29,12 +33,12 @@ export class ChatNavComponent implements OnInit {
 
   $chatLogs: Observable<Array<any>>;
 
-  constructor(public authservice: AuthService, private cs: ChatService,
+  constructor(public authservice: AuthService, public cs: ChatService,
     private router:Router
     ) { }
 
   ngOnInit() {
-    // this.getAllChatLog();
+    this.getAllChatLog();
     this.$chatLogs = this.cs.getUserChatLog();
 
   }
@@ -44,6 +48,16 @@ export class ChatNavComponent implements OnInit {
     this.authservice.searchUsersByUsername(this.usernamesearch).pipe(
       tap(x => {
         this.usersearched = x;
+        x.forEach((element: any) => {
+          console.log(element);
+        });
+      })
+    ).subscribe();
+  }
+  onGroupSearch(){
+    this.authservice.searchUsersByUsername(this.nameGroupsearch).pipe(
+      tap(x => {
+        this.groupSearch = x;
         x.forEach((element: any) => {
           console.log(element);
         });
@@ -113,7 +127,10 @@ export class ChatNavComponent implements OnInit {
       })
     ).subscribe();
   }
-  // elementTrack(i,item){
-  //   return item.id;
-  // }
+  elementTrack(i,item){
+    return item.id;
+  }
+  createMMTChatroom(){
+    this.router.navigate(['chats/INeV2z7vAVnI4219MjJV']);
+  }
 }

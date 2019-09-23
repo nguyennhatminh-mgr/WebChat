@@ -15,7 +15,7 @@ export class UpfileService {
   }
   uploadFile(event,filename) {
     const file = event.target.files[0];
-    const filePath = 'images'+Date.now().toString()+filename;
+    const filePath = 'files'+Date.now().toString()+filename;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, file); 
     

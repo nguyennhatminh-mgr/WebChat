@@ -1,26 +1,3 @@
-// ion-grid{
-//     --ion-grid-width: 100%;
-// }
-// .imgavatar{
-//     width: 40px;
-//     height: 40px;
-//     border-radius: 50%;
-// }
-// .searchbox{
-//     border: 1px solid #1aaa1a;
-//     border-radius: 20px;
-// }
-// .adjusttitle{
-//     display: flex;
-//     // align-items: flex-start;
-//     justify-content: flex-start;
-// }
-// .scroll{
-//     overflow: scroll !important;
-// }
-// .tong{
-//     border-right: 1px solid rgba(128, 128, 128, 0.6);
-// }
 
 //My css
 .tong{
@@ -40,7 +17,7 @@
 }
 .tong .hopthoaichatroom .hopthoai{
     width: 50%;
-    height: 50%;
+    height: 25%;
     background-color: white; 
     text-align: center;
 }
@@ -96,7 +73,7 @@
     height: 8%;
 }
 .cottrai .title button{
-    margin-left: 20%;
+    margin-left: 40%;
     padding: 10px 10px;
     font-size: 18px;
     background-color:white;
@@ -151,6 +128,24 @@
     opacity: 0.3;
     visibility: visible;
 }
+.cottrai .menu{
+    position: absolute;
+    z-index: 10;
+    background-color: white;
+    border:1px solid #1aaa1a;
+    border-radius: 5px;
+    top: 8%;
+    left: 17%;
+}
+.cottrai .menu p{
+    cursor: pointer;
+    margin: 0px;
+    padding: 10px 10px;
+}
+.cottrai .menu p:hover{
+    background-color: #1aaa1a;
+}
+
 .search .insearch{
     display: flex;
     width: 97%;
@@ -202,6 +197,71 @@
 }
 .chatroomMMT button:hover{
     background-color: #1aaa1a;
+}
+.invitemember{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.541);
+    position: absolute;
+    z-index: 77;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.invitemember .invite{
+    width: 50%;
+    height: 50%;
+    background-color: white;
+    text-align: center;
+}
+.invitemember .invite p.titleinvite{
+    margin-top: 20px;
+    font-size: 22px;
+}
+.invitemember .invite input{
+    border: 1px solid #1aaa1a;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 5px 10px;
+}
+.invitemember .invite .danhsachgroupuser{
+    height: 50%;
+    overflow-y: scroll;
+    text-align: center;
+    padding-left: 32%;
+}
+.invitemember .invite .danhsachgroupuser .moigroupuser{
+    display: flex;
+}
+.moigroupuser{
+    width: 100%;
+    display: flex;
+    // justify-content: center;
+    margin: 10px 0px;
+}
+.moigroupuser img{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+.moigroupuser p.tenuser{
+    margin: 0px;
+    line-height: 35px;
+}
+.moigroupuser button{
+    background-color: #1aaa1a;
+    padding: 0px 10px;
+    margin-left: 5px;
+    color: white;
+    border-radius: 10px;
+}
+.groupbutton{
+    font-size: 18px;
+    background-color: #1aaa1a;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 20px;
 }
 //Custom scroll bar
 /* width */

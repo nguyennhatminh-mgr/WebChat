@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { Log } from 'src/app/models/log.model';
+import { async } from 'q';
 
 
 @Component({
@@ -16,6 +17,10 @@ import { Log } from 'src/app/models/log.model';
 })
 export class ChatNavComponent implements OnInit {
   checkshowchatroom=true;
+  checkshowmenu=false;
+  checkshowadduser=false;
+  addsuccess;
+  typeCurrent;
   nameChatroom="";
   nameGroupsearch="";
   usersearched = [];
@@ -25,6 +30,7 @@ export class ChatNavComponent implements OnInit {
 
   url = "../../../../assets/images/groupAvatar.png";
   indexuser = -1;
+  indexID=-1;
   usernamesearch = '';
   check=true;
   user1 = [];
@@ -33,12 +39,17 @@ export class ChatNavComponent implements OnInit {
 
   $chatLogs: Observable<Array<any>>;
 
+  arr1=[];
+  arr2=[];
+
   constructor(public authservice: AuthService, public cs: ChatService,
     private router:Router
     ) { }
 
   ngOnInit() {
     this.$chatLogs = this.cs.getUserChatLog();
+    this.$chatLogs.pipe(tap((x:any)=>{this.arr2=x})).subscribe()
+    this.addsuccess=false;
   }
  
 
@@ -48,19 +59,41 @@ export class ChatNavComponent implements OnInit {
         this.usersearched = x;
         x.forEach((element: any) => {
           console.log(element);
+          
         });
+
       })
     ).subscribe();
   }
-  onGroupSearch(){
+  onGroupSearch(groupChatID){
+    this.groupSearch=[];
     this.authservice.searchUsersByUsername(this.nameGroupsearch).pipe(
       tap(x => {
-        this.groupSearch = x;
-        x.forEach((element: any) => {
-          console.log(element);
+        // this.groupSearch = x;
+        this.arr1=x;
+        this.arr1.forEach(element => {
+          this.arr2.forEach((a1:any)=>{
+            if(a1.id===groupChatID){
+              console.log('a1')
+              console.log(a1)
+              var check=true;
+              a1.chatMember.forEach(a2 => {
+                if(element.uid===a2){
+                  check=false;
+                }
+              });
+              if(check==true){
+                this.groupSearch.push(element)
+              }
+            }
+          });
         });
       })
     ).subscribe();
+    // console.log(this.arr2);
+    
+    // console.log(this.groupSearch)
+    
   }
   searchUserClick(usersDisplay) {
     this.cs.getChatIdByUserId(usersDisplay.uid).pipe(
@@ -102,5 +135,10 @@ export class ChatNavComponent implements OnInit {
   }
   addUserToGroup(){
     // this.cs.addUserToGroup('groupId','userId');
+    
+  }
+  aftergroupsearch(){
+    this.groupSearch=[];
+    console.log(this.groupSearch);
   }
 }

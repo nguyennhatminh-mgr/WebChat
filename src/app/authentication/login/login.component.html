@@ -1,5 +1,6 @@
 <div class="ngoai">
-    <img class="imgngoai" src="../../../assets/images/backgroundLogin2.jpg" alt="">
+    <!-- <img class="imgngoai" src="../../../assets/images/backgroundLogin2.jpg" alt=""> -->
+    <img class="imgngoai" src="https://firebasestorage.googleapis.com/v0/b/firestore-5c63f.appspot.com/o/backgroundLogin2.jpg?alt=media&token=ec52a209-97ee-4461-b21a-97fed54fe0dd" alt="">
     <div class="den"></div>
     <div class="tong">
         <div class="title">
@@ -10,7 +11,10 @@
         <form class="login-form" #formSignin="ngForm">
             <h3 class="subtitle" [hidden]="repass">Log in</h3>
             <h3 class="subtitle" [hidden]="!repass">Sign up</h3>
-            <p class="notify" *ngIf="!(check)">*Something is wrong, please check your email or password</p>
+            <p class="notify" *ngIf="checkLogin">*Something is wrong, please check your email or password</p>
+            <p class="notify" *ngIf="checkLoginUserNotFound">*Something is wrong, your account not found</p>
+            <p class="notify" *ngIf="checkLoginWrongPass">*Something is wrong, your password is wrong</p>
+            <p class="notify" *ngIf="checkSignupEmailInUse">*Something is wrong, email already in use</p>
             <div class="email" >
                 <input  type="email" placeholder="Enter your email"
                 clear-input="true" name="email"
@@ -50,10 +54,10 @@
                             Log in 
                     </button>
                 </div>
-                <div class="textlogin">
+                <div class="textlogin"> 
                     <p>
                         <span>If you have not an account</span>
-                        <span class="textclick" (click)="signupClick()">click to sign up</span>
+                        <span class="textclick" (click)="signupClick(formSignin)">click to sign up</span>
                     </p>
                 </div>
             </div>
@@ -62,7 +66,7 @@
             </div>
             <div class="divbtnsignup" *ngIf="repass">
                 <div class="textsignup">
-                    <span>Already have account ?</span> <span class="textclick" (click)="backClick()">Sign in</span>
+                    <span>Already have account ?</span> <span class="textclick" (click)="backClick(formSignin)">Sign in</span>
                 </div>
                 <div class="btnsignup">
                     <button  (click)="signup(formSignin)" (keydown.enter)="signup(formSignin)" [disabled]="formSignin.invalid" [ngClass]="{'disable': formSignin.invalid}">

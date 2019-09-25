@@ -1,5 +1,6 @@
 <div class="tong">
-  <img class="imgoutside" src="../../../assets/images/backgroundhome3.jpg" alt="">
+  <!-- <img class="imgoutside" src="../../../assets/images/backgroundhome3.jpg" alt=""> -->
+  <img class="imgoutside" src="https://firebasestorage.googleapis.com/v0/b/firestore-5c63f.appspot.com/o/backgroundhome3.jpg?alt=media&token=2bb9261d-3e9a-4883-9264-ee241f9d8ad0" alt="">
   <div class="manden"></div>
   <div class="noidung">
       <div class="login">
@@ -23,10 +24,10 @@
               
         
               <hr>
-              <button class="joinYourChat" routerLink="/chats/kRPiCCd8zaFBTQxvW1n1" [disabled]="!user.photoURL" [ngClass]="{'disablebutton': !user.photoURL}">Join Your Chat 🎪</button>
+              <button class="joinYourChat" routerLink="/chats/defaut" [disabled]="!user.photoURL" [ngClass]="{'disablebutton': !user.photoURL}">Join Your Chat 🎪</button>
               <hr>
-              <button class="button is-info" (click)="cs.create('123',false)">Create new chat</button>
-              <hr>
+              <!-- <button class="button is-info" (click)="cs.create('123',false)">Create new chat</button> -->
+              <!-- <hr> -->
               <button class="signOut" (click)="auth.signOut()">Sign Out</button>
             </div>
             <div class="cotphai">
@@ -43,9 +44,11 @@
                           </div>
                           
                         </div>
+                        
                         <div class="phantram" *ngIf="checkcloadingDone"> </div>
                     </div> 
                   </div>
+                  <!-- <div >Please update avatar</div> -->
             </div>
             <div class="xemanh" *ngIf="!checkshowimg && user.photoURL" >
                 <div class="xemanhtrong">

@@ -1,33 +1,4 @@
-<!-- <ion-content > -->
-<!-- <ion-grid fixed="true">
-    <ion-row>
-        <ion-col size-xl="3" size-xs="12" class="tong">
-            <ion-row>
-                <ion-item>
-                    <ion-avatar slot="start">
-                        <img src="{{url}}">
-                    </ion-avatar>
-                    <h3>Chat</h3>
-                </ion-item>
-            </ion-row>
-            <ion-row>
-                <ion-col size="12">
-                    <ion-input type="search" clear-input="true" placeholder="Search in box chat" class="searchbox">
-                    </ion-input>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col size="12">
-                    <app-chat-list></app-chat-list>
-                </ion-col>
-            </ion-row>
-        </ion-col>
-        <ion-col size-xl="9" size-xs="12" class="colRight">
-            <app-chat-detail></app-chat-detail>
-        </ion-col>
-    </ion-row>
-</ion-grid> -->
-<!-- </ion-content>  -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="tong">
     <div class="hopthoaichatroom" *ngIf="!checkshowchatroom">
         <div class="hopthoai">
@@ -39,28 +10,38 @@
                 <button (click)="cs.create('',true,nameChatroom); checkshowchatroom=true;" [disabled]="nameChatroom===''" [ngClass]="{'disablebtn': nameChatroom===''}">Create</button>
                 <button (click)="checkshowchatroom=true;" style="margin-left: 10px;">Cancel</button>
             </div>
-            <div class="invitemember">
-                <input type="search" [(ngModel)]="nameGroupsearch" name="search" (keydown.enter)="onGroupSearch()">
-                <div class="danhsachgroupuser">
-                    <div class="moigroupuser" *ngFor="let item of groupSearch" style="display:flex;">
-                        <img style="width:30px; height:30px;" src="{{item.photoURL!=null ? item.photoURL : url}}" alt="">
-                        <div >
-                            <p class="tenuser" *ngIf="item.displayName">{{item.displayName}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div>
-        
-
+             
+        </div>       
     </div>
 
+    <div class="invitemember" *ngIf="checkshowadduser">
+        <div class="invite">
+            <p class="titleinvite">Add friend to your group</p>
+            <input type="search" [(ngModel)]="nameGroupsearch" name="search" (keydown.enter)="onGroupSearch(indexID)" placeholder=" Enter username to search">
+            <div class="danhsachgroupuser">
+                <div class="moigroupuser" *ngFor="let item of groupSearch">
+                    <div style="display:flex;">
+                        <img src="{{item.photoURL!=null ? item.photoURL : url}}" alt="">
+                        <p class="tenuser" *ngIf="item.displayName">{{item.displayName}}</p>
+                        <button (click)="cs.addUserToGroup(indexID,item.uid);addsuccess=true;">Add</button>    
+                    </div>
+                </div>
+            </div>
+            <p *ngIf="addsuccess" style="color: #1aaa1a;margin: 0px;">Add user success</p>
+            <button (click)="checkshowadduser=false;nameGroupsearch=''; aftergroupsearch(); addsuccess=false;" class="groupbutton">Exit</button>
+        </div>
+    </div>
     <div class="divoutside">
         <div class="cottrai">
             <div class="title">
                 <img src="../../../../assets/images/icon.png" alt="">
                 <h3 style="font-weight: bold;">Chat</h3>
-                <button (click)="checkshowchatroom=false;">Create chat room</button>
+                <button (click)="checkshowmenu=!checkshowmenu;">Menu <i class="fa fa-bars"></i></button>
+            </div>
+            <div class="menu" *ngIf="checkshowmenu">
+                <p (click)="checkshowchatroom=false; checkshowmenu=!checkshowmenu;">Create chat room</p>
+                <p (click)="createMMTChatroom(); checkshowmenu=!checkshowmenu;">Join MMT chat room</p>
+                <p *ngIf="typeCurrent" (click)="checkshowadduser=true; checkshowmenu=!checkshowmenu;">Add your friend to group</p>
             </div>
             <form class="search">
                 <div class="insearch">
@@ -70,9 +51,9 @@
                     <img  class="imgsearch" src="../../../../assets/images/iconsearch.png" alt="" (click)="onSearch()">
                 </div>
             </form>
-            <div class="chatroomMMT">
+            <!-- <div class="chatroomMMT">
                 <button (click)="createMMTChatroom();">Join MMT chat room</button> 
-            </div>
+            </div> -->
             <div class="danhsachuser" *ngIf="!check">
                 <div class="moiuser" [ngClass]="{'duocclickchon': indexuser==i}" *ngFor="let item of usersearched; index as i" (click)="indexuser=i;searchUserClick(item);">
                     <img src="{{item.photoURL!=null ? item.photoURL : url}}" alt="">
@@ -83,7 +64,7 @@
                 </div>
             </div> 
             <div class="danhsachuser" [hidden]="!check">
-                <div class="moiuser" [ngClass]="{'duocclickchon': indexuser==i}" *ngFor="let item of $chatLogs|async ; index as i" (click)="indexuser=i; getChatCouple(item);">
+                <div class="moiuser" [ngClass]="{'duocclickchon': indexID==item.id}" *ngFor="let item of $chatLogs|async" (click)="indexID=item.id;typeCurrent=item.isChatRoom; getChatCouple(item);">
                     <img src="{{item.photoURL!=null ? item.photoURL : url}}" alt="">
                     <div >
                         <p class="tenuser">{{item.displayName || item.roomName}}</p>

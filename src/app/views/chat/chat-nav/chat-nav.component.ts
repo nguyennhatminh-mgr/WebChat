@@ -30,7 +30,7 @@ export class ChatNavComponent implements OnInit {
 
   url = "../../../../assets/images/groupAvatar.png";
   indexuser = -1;
-  indexID=-1;
+  indexID;
   usernamesearch = '';
   check=true;
   user1 = [];

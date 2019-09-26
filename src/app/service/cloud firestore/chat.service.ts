@@ -179,7 +179,6 @@ export class ChatService {
 	addUserToGroup(chatId:string,userId:string){
 		const newUser = {};
 		newUser[`users.${userId}`]=true;
-		console.log(newUser);
 		return this.afs.collection('chats').doc(chatId).update(newUser);
 	}
 }
